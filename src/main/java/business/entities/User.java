@@ -3,7 +3,7 @@ package business.entities;
 public class User
 {
 
-    public User(String email, String password, String role, double saldo)
+    public User(String email, String password, String role, Double saldo)
     {
         this.email = email;
         this.password = password;
@@ -16,6 +16,15 @@ public class User
     private String password; // Should be hashed and secured
     private String role;
     private double saldo;
+
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
 
     public String getEmail()
     {
