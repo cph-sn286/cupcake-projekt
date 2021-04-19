@@ -56,8 +56,9 @@ public class UserMapper
                 if (rs.next())
                 {
                     String role = rs.getString("role");
+                    double saldo = rs.getDouble(0);
                     int id = rs.getInt("id");
-                    User user = new User(email, password, role);
+                    User user = new User(email, password, role, saldo);
                     user.setId(id);
                     return user;
                 } else
