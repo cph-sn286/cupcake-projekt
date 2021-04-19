@@ -4,7 +4,7 @@
 
 <t:genericpage>
     <jsp:attribute name="header">
-         Login page
+         Velkommen til login-siden
     </jsp:attribute>
 
     <jsp:attribute name="footer">

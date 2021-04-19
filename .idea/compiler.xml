@@ -17,7 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="bmi" options="-endorseddirs C:\Users\Kofoed\Desktop\cupcake-projekt\target/endorsed" />
-      <module name="cupcake" options="-endorseddirs C:\Users\Kofoed\Desktop\cupcake-projekt\target/endorsed" />
+      <module name="cupcake" options="-endorseddirs &quot;C:\Users\thorb\Desktop\Cupcake uge 15-16\cupcake-projekt\target/endorsed&quot;" />
     </option>
   </component>
 </project>
