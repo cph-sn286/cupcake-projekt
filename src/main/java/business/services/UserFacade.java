@@ -2,6 +2,7 @@ package business.services;
 
 import business.entities.IngridiensBottom;
 import business.entities.IngridiensTop;
+import business.entities.Orderline;
 import business.entities.User;
 import business.persistence.Database;
 import business.persistence.UserMapper;
@@ -33,6 +34,13 @@ public class UserFacade {
 
     public List<IngridiensBottom> getIngridiensBottomsList() throws UserException {
         return userMapper.getIngridiensBottomsList();
+
+    }
+
+    public Orderline makeCupcakeToOrderline(int ingridiensBottomId, int ingridiensTopId, int quantity, double price) throws UserException {
+        Orderline orderline = new Orderline(ingridiensBottomId, ingridiensTopId, quantity, price);
+        userMapper.makeCupcakeToOrderline(orderline);
+        return orderline;
 
     }
 

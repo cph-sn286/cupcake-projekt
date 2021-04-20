@@ -14,35 +14,47 @@
 
     <jsp:body>
 
-        <div>
-            <h2>Velkommen ombord</h2>
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
 
-            <div style="margin-top: 3em;margin-bottom: 3em;">
-                Øens bedste cupcakes. Vælg og bestil her:
-                <select name="bund" id="bund">
-                    <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
-                    <option value="${bund.flavor}">${bund.flavor} ${bund.price} kr</option>
+        <h2 class="text-center">Velkommen Til Olsker Cupcakes</h2>
 
-                    </c:forEach>
-            </div>
-            </select>
+        <div style="margin-top: 3em;margin-bottom: 3em;">
+            <h5 class="text-center">Vi har øens bedste cupcakes. Se hvores udvalg her:</h5>
+            </b>
+        </div>
+        <div style="margin-top: 3em;margin-bottom: 3em;">
+            <table class="table table-striped text-center ">
+                <thead>
+                <th>Flavor</th>
+                <th>Price</th>
+                </thead>
+                <h4 class="text-center">Bottoms</h4>
+                <c:forEach var="bottom" items="${applicationScope.IngridiensBottomList}">
+                    <tr>
+                        <td>${bottom.flavor}</td>
+                        <td >${bottom.price}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <table class="table table-striped text-center">
+                <thead>
+                <th>Flavor</th>
+                <th>Price</th>
+                </thead>
+                <h4 class="mt-2 text-center">Toppings</h4>
+                <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
+                    <tr>
+                        <td>${top.flavor}</td>
+                        <td>${top.price}</td>
+                    </tr>
+                </c:forEach>
+            </table>
 
-            <div style="margin-top: 3em;margin-bottom: 3em;">
-                <select name="top" id="top">
-                    <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
-                        <option value="${top.flavor}"> ${top.flavor} ${top.price} kr</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <c:forEach var="bottom" items="${applicationScope.IngridiensBottomList}">
-                <p>"${bottom.flavor}" koster ${bottom.price}</p>
-
-            </c:forEach>
-
-            <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
-                <p> "${top.flavor}" ${top.flavor} ${top.price} kr </p>
-            </c:forEach>
-
+            <p class="text-center">Du skal være logget ind for at bestille.
+                <a href="${pageContext.request.contextPath}/fc/loginpage">Login her</a>
+            </p>
 
             <c:if test="${sessionScope.role == 'employee' }">
             <p style="font-size: larger">This is what you can do,
@@ -57,6 +69,6 @@
                 </c:if>
 
         </div>
-
+        <div class="col-sm-2">
     </jsp:body>
 </t:genericpage>

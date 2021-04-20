@@ -11,10 +11,8 @@
 
     <jsp:body>
         <h1>Hello ${sessionScope.email} din saldo er ${sessionScope.saldo}kr.</h1>
-        You are now logged in as a Customer of our wonderful site.
+        You are now logged in as a Customer of our wonderful site. bestilling
         Role: ${sessionScope.role}
-
-        <p> <a href="${pageContext.request.contextPath}/fc/orderlinepage">gå til bestilling</a> </p>
 
 
 

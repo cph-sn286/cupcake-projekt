@@ -130,4 +130,33 @@ public class UserMapper
         }
     }
 
+    public void makeCupcakeToOrderline(Orderline orderline) throws UserException
+    {
+        try (Connection connection = database.connect())
+        {
+            String sql = "INSERT INTO orderline (ingridient_bottom_id, Ingridient_top_id, quantity, price) VALUES (?, ?,?,?)";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
+            {
+                ps.setInt(1, orderline.getIngridiensBottomId());
+                ps.setInt(2, orderline.getIngridiensTopId());
+                ps.setInt(3, orderline.getQuantity());
+                ps.setDouble(4, orderline.getPrice());
+                ps.executeUpdate();
+                ResultSet ids = ps.getGeneratedKeys();
+                ids.next();
+                int order_id = ids.getInt(1);
+                orderline.setOrderId(order_id);
+            }
+            catch (SQLException ex)
+            {
+                throw new UserException(ex.getMessage());
+            }
+        }
+        catch (SQLException ex)
+        {
+            throw new UserException(ex.getMessage());
+        }
+    }
+
 }
