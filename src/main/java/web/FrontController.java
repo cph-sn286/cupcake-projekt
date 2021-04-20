@@ -39,7 +39,7 @@ public class FrontController extends HttpServlet
         }
 
         // Initialize whatever global datastructures needed here:
-
+        request.getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
     }
 
     protected void processRequest(
