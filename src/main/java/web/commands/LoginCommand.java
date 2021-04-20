@@ -1,6 +1,7 @@
 package web.commands;
 
 import business.entities.User;
+import business.persistence.UserMapper;
 import business.services.UserFacade;
 import business.exceptions.UserException;
 
@@ -33,6 +34,9 @@ public class LoginCommand extends CommandUnprotectedPage
         session.setAttribute("role", user.getRole());
         session.setAttribute("email", email);
         session.setAttribute("saldo", user.getSaldo());
+//            UserMapper userMapper = new UserMapper(database);
+//            userMapper.getIngridiensTopsList();
+//            userMapper.getIngridiensBottomsList();
 
         String pageToShow =  user.getRole() + "page";
         return REDIRECT_INDICATOR + pageToShow;

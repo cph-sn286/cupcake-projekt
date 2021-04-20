@@ -1,9 +1,11 @@
 package business.persistence;
 
+import business.entities.*;
 import business.exceptions.UserException;
-import business.entities.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper
 {
@@ -77,4 +79,55 @@ public class UserMapper
             throw new UserException("Connection to database could not be established");
         }
     }
+
+    public List<IngridiensTop> getIngridiensTopsList() throws UserException {
+        List<IngridiensTop> ingridiensTopList = new ArrayList<>();
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM ingridiens_top";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+
+                    int id = rs.getInt("ingridient_id");
+                    String name = rs.getString("ingridient_name");
+                    Double price = rs.getDouble("price");
+                    ingridiensTopList.add(new IngridiensTop(id, name, price));
+                    System.out.println(ingridiensTopList);
+                }
+                return ingridiensTopList;
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+    public List<IngridiensBottom> getIngridiensBottomsList() throws UserException {
+        List<IngridiensBottom> ingridiensBottoms = new ArrayList<>();
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM ingridiens_top";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+
+                    int id = rs.getInt("ingridient_id");
+                    String name = rs.getString("ingridient_name");
+                    Double price = rs.getDouble("price");
+                    ingridiensBottoms.add(new IngridiensBottom(id, name, price));
+                    System.out.println(ingridiensBottoms);
+                }
+                return ingridiensBottoms;
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
 }
