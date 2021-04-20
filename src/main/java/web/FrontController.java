@@ -1,7 +1,9 @@
 package web;
 
 import business.exceptions.UserException;
+import business.persistence.CupcakeMapper;
 import business.persistence.Database;
+import business.persistence.UserMapper;
 import web.commands.*;
 
 import java.io.IOException;
@@ -23,24 +25,26 @@ public class FrontController extends HttpServlet
 
     public static Database database;
 
-    public void init() throws ServletException
-    {
+    public void init() throws ServletException {
         // Initialize database connection
-        if (database == null)
-        {
-            try
-            {
+        if (database == null) {
+            try {
                 database = new Database(USER, PASSWORD, URL);
-            }
-            catch (ClassNotFoundException ex)
-            {
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
 
         // Initialize whatever global datastructures needed here:
-        request.getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
+        CupcakeMapper cupcakeMapper = new CupcakeMapper(database);
+        try {
+            getServletContext().setAttribute("orderList", cupcakeMapper.getAllOrders());
+        } catch (UserException ex) {
+            Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
+
+        }
     }
+
 
     protected void processRequest(
             HttpServletRequest request,
