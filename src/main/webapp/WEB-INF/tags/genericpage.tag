@@ -54,6 +54,10 @@
         <c:if test="${sessionScope.user != null }">
             <a type="button" class="btn btn-sm  btn-outline-secondary"
                href="${pageContext.request.contextPath}/fc/logoutcommand">Logout</a>
+
+            <a type="button" class="btn btn-sm  btn-outline-secondary"
+               href="${pageContext.request.contextPath}/fc/customeraddcredit">Tilføj Beløb</a>
+
         </c:if>
         <c:if test="${sessionScope.user == null }">
             <a type="button" class="btn btn-sm  btn-outline-secondary"
