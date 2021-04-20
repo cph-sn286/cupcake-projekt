@@ -1,24 +1,35 @@
 package business.entities;
 
 public class Orderline {
-    Cupcake cupcake;
+    //    Cupcake cupcake;
+    private IngridiensBottom ingridiensBottom;
+    private IngridiensTop ingridiensTop;
     private int orderId;
     private int quantity;
     private int price;
 
-    public Orderline(Cupcake cupcake, int orderId, int quantity, int price) {
-        this.cupcake = cupcake;
+    public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int orderId, int quantity, int price) {
+        this.ingridiensBottom = ingridiensBottom;
+        this.ingridiensTop = ingridiensTop;
         this.orderId = orderId;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public Cupcake getCupcake() {
-        return cupcake;
+    public IngridiensBottom getIngridiensBottom() {
+        return ingridiensBottom;
     }
 
-    public void setCupcake(Cupcake cupcake) {
-        this.cupcake = cupcake;
+    public void setIngridiensBottom(IngridiensBottom ingridiensBottom) {
+        this.ingridiensBottom = ingridiensBottom;
+    }
+
+    public IngridiensTop getIngridiensTop() {
+        return ingridiensTop;
+    }
+
+    public void setIngridiensTop(IngridiensTop ingridiensTop) {
+        this.ingridiensTop = ingridiensTop;
     }
 
     public int getOrderId() {

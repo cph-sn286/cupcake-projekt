@@ -1,22 +1,22 @@
 package business.entities;
 
 public class IngridiensTop {
-    private int id;
+    private int topId;
     private String flavor;
     private double price;
 
-    public IngridiensTop(int id, String flavor, double price) {
-        this.id = id;
+    public IngridiensTop(int TopId, String flavor, double price) {
+        this.topId = TopId;
         this.flavor = flavor;
         this.price = price;
     }
 
-    public int getId() {
-        return id;
+    public int getTopId() {
+        return topId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTopId(int topId) {
+        this.topId = topId;
     }
 
     public String getFlavor() {
