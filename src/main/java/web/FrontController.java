@@ -2,6 +2,7 @@ package web;
 
 import business.exceptions.UserException;
 import business.persistence.Database;
+import business.persistence.UserMapper;
 import web.commands.*;
 
 import java.io.IOException;
@@ -39,6 +40,14 @@ public class FrontController extends HttpServlet
         }
 
         // Initialize whatever global datastructures needed here:
+        UserMapper userMapper= new UserMapper(database);
+        try {
+            getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
+            getServletContext().setAttribute("IngridiensTopList", userMapper.getIngridiensTopsList());
+        } catch (UserException ex) {
+            Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
+
+        }
 
     }
 

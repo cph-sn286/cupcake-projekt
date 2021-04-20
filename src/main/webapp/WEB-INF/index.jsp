@@ -19,8 +19,20 @@
 
             <div style="margin-top: 3em;margin-bottom: 3em;">
                 Øens bedste cupcakes. Vælg og bestil her:
+                <select name="bund" id="bund">
+                    <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
+                        <option value="${bund.flavor}">${bund.flavor}</option>
 
+                    </c:forEach>
+
+                </select>
+<%--                <c:forEach var="bottomingredient" items="${applicationScope.IngridiensBottomList}">--%>
+<%--                    <p>"${bottomingredient.flavor}" koster ${bottomingredient.price}</p>--%>
+
+<%--                </c:forEach>--%>
             </div>
+
+
 
             <c:if test="${sessionScope.role == 'employee' }">
                 <p style="font-size: larger">This is what you can do,
