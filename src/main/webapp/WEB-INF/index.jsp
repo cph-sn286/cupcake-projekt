@@ -21,30 +21,40 @@
                 Øens bedste cupcakes. Vælg og bestil her:
                 <select name="bund" id="bund">
                     <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
-                        <option value="${bund.flavor}">${bund.flavor}</option>
+                    <option value="${bund.flavor}">${bund.flavor} ${bund.price} kr</option>
 
                     </c:forEach>
-
-                </select>
-<%--                <c:forEach var="bottomingredient" items="${applicationScope.IngridiensBottomList}">--%>
-<%--                    <p>"${bottomingredient.flavor}" koster ${bottomingredient.price}</p>--%>
-
-<%--                </c:forEach>--%>
             </div>
+            </select>
 
+            <div style="margin-top: 3em;margin-bottom: 3em;">
+                <select name="top" id="top">
+                    <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
+                        <option value="${top.flavor}"> ${top.flavor} ${top.price} kr</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <c:forEach var="bottom" items="${applicationScope.IngridiensBottomList}">
+                <p>"${bottom.flavor}" koster ${bottom.price}</p>
+
+            </c:forEach>
+
+            <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
+                <p> "${top.flavor}" ${top.flavor} ${top.price} kr </p>
+            </c:forEach>
 
 
             <c:if test="${sessionScope.role == 'employee' }">
-                <p style="font-size: larger">This is what you can do,
-                    since your are logged in as an employee</p>
-                 <p><a href="fc/employeepage">Employee Page</a>
-             </c:if>
+            <p style="font-size: larger">This is what you can do,
+                since your are logged in as an employee</p>
+            <p><a href="fc/employeepage">Employee Page</a>
+                </c:if>
 
-             <c:if test="${sessionScope.role == 'customer' }">
-                <p style="font-size: larger">This is what you can do, since your
-                    are logged in as a customer</p>
-                <p><a href="fc/customerpage">Customer Page</a>
-            </c:if>
+                <c:if test="${sessionScope.role == 'customer' }">
+            <p style="font-size: larger">This is what you can do, since your
+                are logged in as a customer</p>
+            <p><a href="fc/customerpage">Customer Page</a>
+                </c:if>
 
         </div>
 

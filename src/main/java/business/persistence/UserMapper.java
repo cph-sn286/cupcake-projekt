@@ -108,7 +108,7 @@ public class UserMapper
     public List<IngridiensBottom> getIngridiensBottomsList() throws UserException {
         List<IngridiensBottom> ingridiensBottoms = new ArrayList<>();
         try (Connection connection = database.connect()) {
-            String sql = "SELECT * FROM ingridiens_top";
+            String sql = "SELECT * FROM ingridiens_bottom";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
