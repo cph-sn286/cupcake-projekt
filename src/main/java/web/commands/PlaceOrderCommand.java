@@ -23,21 +23,22 @@ public class PlaceOrderCommand extends CommandUnprotectedPage {
         UserMapper userMapper = new UserMapper(database);
 //        skal være via facade
 
+//        beregner pris på ordre som består af enkelt ordrelinje
         int bottomId = Integer.parseInt(request.getParameter("bund"));
         int topId = Integer.parseInt(request.getParameter("top"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
         IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
         IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
 
-//        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop);
+        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
+        double totalPrice = orderline.getPrice();
 
-//        attrap-ordre
-        Order order = new Order(4, "18:99", 100);
+//        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
 
+        Order order = new Order(3, "xx:xx", totalPrice);
 
-//beregn pris via pris som vi har adgang til via applicationscope
-
-
-        userMapper.insertOrder(order, bottomId, topId);
+        userMapper.insertOrder(order, orderline);
 
 
         return pageToShow;

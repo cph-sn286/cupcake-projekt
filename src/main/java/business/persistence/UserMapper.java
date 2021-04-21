@@ -159,7 +159,7 @@ public class UserMapper {
     }
 
 
-    public void insertOrderline(int ingridiensBottomId, int ingridiensTopId, int orderId, int quantity, int price) throws UserException {
+    public void insertOrderline(Orderline orderline, int orderId) throws UserException {
 
         try (Connection connection = database.connect()) {
             String sql = "INSERT INTO `cupcake`.`orderline`" +
@@ -167,11 +167,11 @@ public class UserMapper {
                     "(`ingridient_bottom_id`, `Ingridient_top_id`, `order_id`, `quantity`, `price`) VALUES (?,?,?,?,?)";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, ingridiensBottomId);
-                ps.setInt(2, ingridiensTopId);
+                ps.setInt(1, orderline.getIngridiensBottom().getBottomId());
+                ps.setInt(2, orderline.getIngridiensTop().getTopId());
                 ps.setInt(3, orderId);
-                ps.setInt(4, quantity);
-                ps.setInt(5, price);
+                ps.setInt(4, orderline.getQuantity());
+                ps.setDouble(5, orderline.getPrice());
 
                 ps.executeUpdate();
 //                ResultSet ids = ps.getGeneratedKeys();
@@ -186,7 +186,7 @@ public class UserMapper {
         }
     }
 
-    public void insertOrder(Order order, int ingridiensBottomId, int ingridiensTopId) throws UserException {
+    public void insertOrder(Order order, Orderline orderline) throws UserException {
 
 
         try (Connection connection = database.connect()) {
@@ -204,7 +204,7 @@ public class UserMapper {
                 ids.next();
                 int orderId = ids.getInt(1);
 
-                insertOrderline(ingridiensBottomId, ingridiensTopId, orderId, 1, 50);
+                insertOrderline(orderline, orderId);
 
 //                for (Integer hobbyId : hobbyList) {
 //                    insertIntoLinkHobbyBmiEntry(bmiEntryId, (int) hobbyId);

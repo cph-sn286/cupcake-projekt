@@ -5,10 +5,10 @@ public class Orderline {
     private IngridiensBottom ingridiensBottom;
     private IngridiensTop ingridiensTop;
     private int orderId;
-    private int quantity=1;
-    private int price=1;
+    private int quantity;
+    private double price;
 
-    public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int orderId, int quantity, int price) {
+    public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int orderId, int quantity, double price) {
         this.ingridiensBottom = ingridiensBottom;
         this.ingridiensTop = ingridiensTop;
         this.orderId = orderId;
@@ -16,9 +16,12 @@ public class Orderline {
         this.price = price;
     }
 
-    public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop) {
+//    beregner pris når ordrelinjen instantieres
+    public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int quantity) {
         this.ingridiensBottom = ingridiensBottom;
         this.ingridiensTop = ingridiensTop;
+        this.quantity = quantity;
+        setPrice(ingridiensBottom, ingridiensTop, quantity);
     }
 
     public IngridiensBottom getIngridiensBottom() {
@@ -53,11 +56,11 @@ public class Orderline {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPrice(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int quantity) {
+        this.price = Double.valueOf((ingridiensBottom.getPrice() + ingridiensTop.getPrice()) * quantity);
     }
 }

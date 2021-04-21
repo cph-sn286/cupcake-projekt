@@ -21,6 +21,7 @@
                 Øens bedste cupcakes. Vælg og bestil her:
                 <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
                     <select name="bund" id="bund">
+                        <option value="" selected disabled hidden>vælg bund</option>
                         <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
                         <option value="${bund.bottomId}">${bund.flavor} ${bund.price} kr</option>
 
@@ -30,11 +31,22 @@
 
             <div style="margin-top: 3em;margin-bottom: 3em;">
                 <select name="top" id="top">
+                    <option value="" selected disabled hidden>vælg top</option>
                     <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
                         <option value="${top.topId}"> ${top.flavor} ${top.price} kr</option>
                     </c:forEach>
                 </select>
+
             </div>
+
+            <select name="quantity" id="quantity">
+                <option value="" selected disabled hidden>vælg antal</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
             <input type="submit" value="Bestil" class="btn btn-primary">
 
