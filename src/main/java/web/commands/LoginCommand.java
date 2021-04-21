@@ -1,6 +1,9 @@
 package web.commands;
 
+import business.entities.IngridiensBottom;
+import business.entities.IngridiensTop;
 import business.entities.User;
+import business.persistence.UserMapper;
 import business.services.UserFacade;
 import business.exceptions.UserException;
 
