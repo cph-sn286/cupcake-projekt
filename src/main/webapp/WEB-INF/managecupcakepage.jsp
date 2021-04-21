@@ -4,18 +4,19 @@
 
 <t:genericpage>
     <jsp:attribute name="header">
-         List of sports
+         List of Orders
     </jsp:attribute>
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
 
         <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
 
             <h1>Hello ${sessionScope.email} </h1>
             <h3>This is a list of all ordre</h3>
+
 
             <form action="${pageContext.request.contextPath}/fc/manageorders" method="post">
                 <table class="table">
@@ -36,10 +37,7 @@
                             <td>${orderItem.created}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm " type="submit" name="delete"
-                                        value="${orderItem.order_id}">Fjern
-                                </button>
-                                <button class="btn btn-primary btn-sm " type="submit" name="edit"
-                                        value="${orderItem.order_id}">Rediger
+                                        value="${orderItem.order_id}">Slet
                                 </button>
                             </td>
                         </tr>
@@ -53,7 +51,7 @@
 
             </form>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
 
     </jsp:body>
 </t:genericpage>

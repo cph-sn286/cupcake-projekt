@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label class="form-check-label" for="name">Navn: </label>
                     <input id="name" class="form-control" type="text" name="name"
-                           value="${requestScope.orderItem.pickuptime}"/>
+                           value="${requestScope.orderItem.order_id}"/>
                     <button class="btn btn-primary btn-sm mt-2" type="submit" name="update">Rediger</button>
                 </div>
             </div>
