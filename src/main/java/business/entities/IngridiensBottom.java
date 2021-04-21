@@ -3,9 +3,9 @@ package business.entities;
 public class IngridiensBottom {
     private int bottomId;
     private String flavor;
-    private double price;
+    private int price;
 
-    public IngridiensBottom(int bottomId, String flavor, double price) {
+    public IngridiensBottom(int bottomId, String flavor, int price) {
         this.bottomId = bottomId;
         this.flavor = flavor;
         this.price = price;
@@ -31,7 +31,7 @@ public class IngridiensBottom {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

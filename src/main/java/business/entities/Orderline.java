@@ -5,8 +5,8 @@ public class Orderline {
     private IngridiensBottom ingridiensBottom;
     private IngridiensTop ingridiensTop;
     private int orderId;
-    private int quantity;
-    private int price;
+    private int quantity=1;
+    private int price=1;
 
     public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int orderId, int quantity, int price) {
         this.ingridiensBottom = ingridiensBottom;
@@ -14,6 +14,11 @@ public class Orderline {
         this.orderId = orderId;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop) {
+        this.ingridiensBottom = ingridiensBottom;
+        this.ingridiensTop = ingridiensTop;
     }
 
     public IngridiensBottom getIngridiensBottom() {
