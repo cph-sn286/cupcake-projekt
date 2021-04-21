@@ -36,7 +36,7 @@
                             <td>${orderItem.totalprice}</td>
                             <td>${orderItem.created}</td>
                             <td>
-                                <button class="btn btn-danger btn-sm " type="submit" name="delete"
+                                <button class="btn btn-danger " type="submit" name="delete"
                                         value="${orderItem.order_id}">Slet
                                 </button>
                             </td>

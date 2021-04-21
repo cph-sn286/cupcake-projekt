@@ -27,8 +27,6 @@ public class ManageCupcakeCommand extends CommandProtectedPage {
         if (deleteId != null) {
             int rowsAffected = cupcakeFacade.deleteOrder(Integer.parseInt(deleteId));
             if (rowsAffected > 0) {
-
-                // Update sportList in application scope
                 request.getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
             } else {
                 request.setAttribute("error", "Det er forbudt at fjerne en ordrer!!");
