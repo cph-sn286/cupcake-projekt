@@ -42,8 +42,11 @@
 
     <div>
 
-        <c:if test="${sessionScope.user != null }">
+        <c:if test="${sessionScope.user != null && sessionScope.user.role == 'customer'}">
             ${sessionScope.user.email} Saldo: ${sessionScope.saldo}
+        </c:if> 
+        <c:if test="${sessionScope.user != null && sessionScope.user.role == 'employee'}">
+            Role: ${sessionScope.role}
         </c:if>
 
         <c:set var="thisPage" value="${pageContext.request.servletPath}"/>
