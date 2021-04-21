@@ -21,13 +21,15 @@ public class CreditCalculator extends CommandProtectedPage {
         HttpSession session = request.getSession();
         User user;
         user = (User) session.getAttribute("user");
+        String userEmail = user.getEmail();
         Double usersaldo = user.getSaldo();
         Double nysaldo = usersaldo + credit;
         try (Connection connection = database.connect()) {
-            String sql = "UPDATE users SET saldo = ? WHERE email = email";
+            String sql = "UPDATE users SET saldo = ? WHERE email = ?";
             try (
                     PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setDouble(1, nysaldo);
+                ps.setString(2, userEmail);
                 ps.executeUpdate();
                 ResultSet ids = ps.getGeneratedKeys();
                 ids.next();
