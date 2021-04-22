@@ -10,6 +10,9 @@ import business.persistence.UserMapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlaceOrderCommand extends CommandProtectedPage {
     public PlaceOrderCommand(String pageToShow, String role) {
@@ -32,13 +35,46 @@ public class PlaceOrderCommand extends CommandProtectedPage {
         IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
 
         Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
-        double totalPrice = orderline.getPrice();
+
+        List<Orderline> orderlines = null;
+
+        if (session.getAttribute("orderlineList") == null) {
+            orderlines=new ArrayList<>();
+            orderlines.add(orderline);
+        }
+        if (session.getAttribute("orderlineList") != null) {
+            orderlines= (List<Orderline>) session.getAttribute("orderlineList");
+                        orderlines.add(orderline);
+        }
+
+
+
+
+
+//        String[] hobbies = request.getParameterValues("hobby");
+//        List<String> hobbyListStrings = null;
+//        if (hobbies != null) {
+//            hobbyListStrings = Arrays.asList(hobbies);
+//        }
+//
+//        List<Integer> hobbyListIntegers = new ArrayList<>();
+//        for (String hobbyListItem : hobbyListStrings) {
+//            hobbyListIntegers.add(Integer.parseInt(hobbyListItem));
+//        }
+//
+//        getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
+
+//        request.setAttribute("hobbies", hobbyListIntegers);
+
+        session.setAttribute("orderlineList", orderlines);
+
 
 //        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
 
+        double totalPrice = orderline.getPrice();
         Order order = new Order(3, "xx:xx", totalPrice);
 
-        userMapper.insertOrder(order, orderline);
+//        userMapper.insertOrder(order, orderline);
 
 
         return pageToShow;
