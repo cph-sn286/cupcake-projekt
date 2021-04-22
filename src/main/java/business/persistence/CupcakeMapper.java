@@ -16,20 +16,36 @@ public class CupcakeMapper {
     }
 
     public int deleteOrder(int order_id) throws UserException {
+        int rowaAffected = 0;
         try (Connection connection = database.connect()) {
-            String sql = "DELETE FROM orders " +
+            String sql = "DELETE FROM orderline " +
+                    "WHERE order_id = ?";
+            String sql2 = "DELETE FROM orders " +
                     "WHERE order_id = ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, order_id);
-                int rowaAffected = ps.executeUpdate();
-                return rowaAffected;
-            } catch (SQLException ex) {
-                throw new UserException(ex.getMessage());
+            while (rowaAffected == 0) {
+                try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                    ps.setInt(1, order_id);
+                    rowaAffected = ps.executeUpdate();
+                } catch (SQLException ex) {
+                    throw new UserException(ex.getMessage());
+                }
             }
+            while (rowaAffected >= 1) {
+                try (PreparedStatement ps = connection.prepareStatement(sql2)) {
+                    ps.setInt(1, order_id);
+                    rowaAffected += ps.executeUpdate();
+                    break;
+                } catch (SQLException ex) {
+                    throw new UserException(ex.getMessage());
+                }
+            }
+
         } catch (SQLException ex) {
             throw new UserException(ex.getMessage());
         }
+
+        return rowaAffected;
     }
 
     public List<Orders> getAllOrders() throws UserException {

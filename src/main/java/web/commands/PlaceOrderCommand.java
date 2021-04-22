@@ -1,9 +1,6 @@
 package web.commands;
 
-import business.entities.IngridiensBottom;
-import business.entities.IngridiensTop;
-import business.entities.Order;
-import business.entities.Orderline;
+import business.entities.*;
 import business.exceptions.UserException;
 import business.persistence.UserMapper;
 
@@ -24,6 +21,8 @@ public class PlaceOrderCommand extends CommandProtectedPage {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         HttpSession session = request.getSession();
         UserMapper userMapper = new UserMapper(database);
+        User user = new User();
+
 //        skal være via facade
 
 //        beregner pris på ordre som består af enkelt ordrelinje
@@ -53,8 +52,9 @@ public class PlaceOrderCommand extends CommandProtectedPage {
 //        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
 
 //        double totalPrice = orderline.getPrice();
-            Order order = new Order(4, "xx:xx", 35);
 
+            int id = user.getId();
+            Order order = new Order(4 ,"xx:xx", 35);
             userMapper.insertOrder(order, orderlines);
 
 

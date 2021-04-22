@@ -19,6 +19,10 @@ public class User
         this.saldo = saldo;
     }
 
+    public User() {
+
+    }
+
     public double getSaldo() {
         return saldo;
     }
