@@ -36,7 +36,7 @@ public class PlaceOrderCommand extends CommandUnprotectedPage {
 
 //        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
 
-        Order order = new Order(3, "xx:xx", totalPrice);
+        Order order = new Order(4, "18:30", totalPrice);
 
         userMapper.insertOrder(order, orderline);
 

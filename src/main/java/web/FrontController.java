@@ -37,23 +37,16 @@ public class FrontController extends HttpServlet {
         // Initialize whatever global datastructures needed here:
 
 //        merge-konflikt fra US-1
+        UserMapper userMapper = new UserMapper(database);
         CupcakeMapper cupcakeMapper = new CupcakeMapper(database);
         try {
-            getServletContext().setAttribute("orderList", cupcakeMapper.getAllOrders());
+            getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
+            getServletContext().setAttribute("IngridiensTopList", userMapper.getIngridiensTopsList());
         } catch (UserException ex) {
             Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
         }
 
 //            tilføjet fra branch US-1
-        UserMapper userMapper = new UserMapper(database);
-        try {
-            getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
-            getServletContext().setAttribute("IngridiensTopList", userMapper.getIngridiensTopsList());
-        } catch (UserException ex2) {
-            Logger.getLogger("web").log(Level.SEVERE, ex2.getMessage(), ex2);
-
-        }
-
 
     }
 

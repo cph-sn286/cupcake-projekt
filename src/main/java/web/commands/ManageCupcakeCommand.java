@@ -2,6 +2,7 @@ package web.commands;
 
 import business.entities.Orders;
 import business.exceptions.UserException;
+import business.persistence.CupcakeMapper;
 import business.services.CupcakeFacade;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +20,12 @@ public class ManageCupcakeCommand extends CommandProtectedPage {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
 
+        CupcakeMapper cupcakeMapper = new CupcakeMapper(database);
+        request.getServletContext().setAttribute("orderList", cupcakeMapper.getAllOrders());
+
         String deleteId = request.getParameter("delete");
         String editId = request.getParameter("edit");
         String update = request.getParameter("update");
-
 
         if (deleteId != null) {
             int rowsAffected = cupcakeFacade.deleteOrder(Integer.parseInt(deleteId));
