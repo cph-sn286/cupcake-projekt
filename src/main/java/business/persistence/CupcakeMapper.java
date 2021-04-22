@@ -31,10 +31,11 @@ public class CupcakeMapper {
                     throw new UserException(ex.getMessage());
                 }
             }
-            while (rowaAffected == 1) {
+            while (rowaAffected >= 1) {
                 try (PreparedStatement ps = connection.prepareStatement(sql2)) {
                     ps.setInt(1, order_id);
                     rowaAffected += ps.executeUpdate();
+                    break;
                 } catch (SQLException ex) {
                     throw new UserException(ex.getMessage());
                 }
