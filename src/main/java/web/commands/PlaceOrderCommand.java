@@ -3,6 +3,7 @@ package web.commands;
 import business.entities.*;
 import business.exceptions.UserException;
 import business.persistence.UserMapper;
+import business.services.UserFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ public class PlaceOrderCommand extends CommandProtectedPage {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         HttpSession session = request.getSession();
         UserMapper userMapper = new UserMapper(database);
+        UserFacade userFacade = new UserFacade(database);
+        String pickuptime = (request.getParameter("pickuptime"));
 
 //        skal være via facade
 
@@ -39,24 +42,26 @@ public class PlaceOrderCommand extends CommandProtectedPage {
 
         if (session.getAttribute("orderlineList") == null) {
             session.setAttribute("besked", "der er ingen varer i indkøbskurven");
+            return pageToShow;
         }
         if (session.getAttribute("orderlineList") != null) {
             orderlines = (List<Orderline>) session.getAttribute("orderlineList");
 
-
-//        getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
-//            int userId = session.getAttribute("userid");
-
-
-//        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
-
-//        double totalPrice = orderline.getPrice();
-
-           int userId = (int) session.getAttribute("userid");
-            Order order = new Order(userId, "xx:xx", 35);
-            userMapper.insertOrder(order, orderlines);
-
-
+            double totalPrice = 0;
+            for (Orderline orderline : orderlines) {
+                totalPrice = totalPrice + orderline.getPrice();
+            }
+            if ((double) session.getAttribute("saldo") >= totalPrice) {
+                double nySaldo = (double) session.getAttribute("saldo") - totalPrice;
+                int userId = (int) session.getAttribute("userid");
+                Order order = new Order(userId, "xx:xx", totalPrice);
+                userMapper.insertOrder(order, orderlines);
+                session.setAttribute("saldo", nySaldo);
+                userFacade.updateUser(nySaldo, userId);
+                session.setAttribute("orderlineList", null);
+            } else {
+                session.setAttribute("message", "Ups du har ikke penge nok på kontoen Tank op for at bestille:)");
+            }
         }
         return pageToShow;
     }

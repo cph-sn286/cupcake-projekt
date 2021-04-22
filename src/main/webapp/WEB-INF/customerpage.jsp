@@ -55,6 +55,19 @@
                     </div>
 
                     <div class="col-md-3">
+                        <select name="quantity" id="pickuptime">
+                            <option value="" selected disabled hidden>vælg tidspunkt </option>
+                            <option value="1">1</option>
+                    </div>
+                    <option value="11:00">2</option>
+                    <option value="12:00">3</option>
+                    <option value="13:00">4</option>
+                    <option value="14:00">5</option>
+                    </select>
+
+                </div>
+
+                    <div class="col-md-3">
                         <input type="submit" value="læg i kurv" class="btn btn-primary">
 
                     </div>
@@ -64,27 +77,28 @@
         </form>
 
 
-            <table class="table">
-                <thead>
-                <th>Top</th>
-                <th>Bund</th>
-                <th>Antal</th>
-                <th>pris</th>
-                <th>Ordretidspunkt</th>
-                <th></th>
-                </thead>
+        <table class="table">
+            <thead>
+            <th>Top</th>
+            <th>Bund</th>
+            <th>Antal</th>
+            <th>pris</th>
+            <th>Afhentning</th>
+            <th>Ordretidspunkt</th>
+            <th></th>
+            </thead>
 
-                <c:forEach var="orderline" items="${sessionScope.orderlineList}">
-                    <tr>
-                        <td>${orderline.ingridiensBottom.flavor}</td>
-                        <td>${orderline.ingridiensTop.flavor}</td>
-                        <td>${orderline.quantity}</td>
-                        <td>${orderline.price}</td>
-                        <td> TBD</td>
-                    </tr>
-                </c:forEach>
+            <c:forEach var="orderline" items="${sessionScope.orderlineList}">
+                <tr>
+                    <td>${orderline.ingridiensBottom.flavor}</td>
+                    <td>${orderline.ingridiensTop.flavor}</td>
+                    <td>${orderline.quantity}</td>
+                    <td>${orderline.price}</td>
+                    <td> TBD</td>
+                </tr>
+            </c:forEach>
 
-            </table>
+        </table>
         <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
             <input type="submit" value="Bestil ordre" class="btn btn-primary">
 

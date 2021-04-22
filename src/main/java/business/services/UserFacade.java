@@ -42,5 +42,8 @@ public class UserFacade
         return userMapper.getIngridiensBottomsList();
 
     }
+    public int updateUser( double saldo, int userId) throws UserException {
+        return userMapper.updateUser(saldo, userId);
+    }
 
 }
