@@ -21,7 +21,6 @@ public class PlaceOrderCommand extends CommandProtectedPage {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         HttpSession session = request.getSession();
         UserMapper userMapper = new UserMapper(database);
-        User user = new User();
 
 //        skal være via facade
 
@@ -53,8 +52,8 @@ public class PlaceOrderCommand extends CommandProtectedPage {
 
 //        double totalPrice = orderline.getPrice();
 
-            int id = user.getId();
-            Order order = new Order(4 ,"xx:xx", 35);
+           int userId = (int) session.getAttribute("userid");
+            Order order = new Order(userId, "xx:xx", 35);
             userMapper.insertOrder(order, orderlines);
 
 
