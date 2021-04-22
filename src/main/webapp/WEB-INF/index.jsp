@@ -34,7 +34,7 @@
                 <c:forEach var="bottom" items="${applicationScope.IngridiensBottomList}">
                     <tr>
                         <td>${bottom.flavor}</td>
-                        <td >${bottom.price}</td>
+                        <td >${bottom.price} $</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -47,7 +47,7 @@
                 <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
                     <tr>
                         <td>${top.flavor}</td>
-                        <td>${top.price}</td>
+                        <td>${top.price} $</td>
                     </tr>
                 </c:forEach>
             </table>
