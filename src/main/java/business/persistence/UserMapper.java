@@ -186,7 +186,7 @@ public class UserMapper {
         }
     }
 
-    public void insertOrder(Order order, Orderline orderline) throws UserException {
+    public void insertOrder(Order order, List<Orderline> orderlines) throws UserException {
 
 
         try (Connection connection = database.connect()) {
@@ -204,11 +204,11 @@ public class UserMapper {
                 ids.next();
                 int orderId = ids.getInt(1);
 
+
+                for (Orderline orderline : orderlines) {
                 insertOrderline(orderline, orderId);
 
-//                for (Integer hobbyId : hobbyList) {
-//                    insertIntoLinkHobbyBmiEntry(bmiEntryId, (int) hobbyId);
-//                }
+                }
 
 
             } catch (SQLException ex) {

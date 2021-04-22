@@ -36,6 +36,7 @@ public class LoginCommand extends CommandUnprotectedPage
         session.setAttribute("role", user.getRole());
         session.setAttribute("email", email);
         session.setAttribute("saldo", user.getSaldo());
+        session.setAttribute("userid", user.getId());
 
         String pageToShow =  user.getRole() + "page";
         return REDIRECT_INDICATOR + pageToShow;

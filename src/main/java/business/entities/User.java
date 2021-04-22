@@ -3,13 +3,7 @@ package business.entities;
 public class User
 {
 
-    public User(String email, String password, String role, Double saldo)
-    {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.saldo = saldo;
-    }
+
 
     private int id; // just used to demo retrieval of autogen keys in UserMapper
     private String email;
@@ -17,6 +11,13 @@ public class User
     private String role;
     private double saldo;
 
+    public User(String email, String password, String role, Double saldo)
+    {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.saldo = saldo;
+    }
 
     public double getSaldo() {
         return saldo;

@@ -14,7 +14,7 @@
         You are now logged in as a Customer of our wonderful site.
         Role: ${sessionScope.role}
 
-        <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
+        <form action="${pageContext.request.contextPath}/fc/placeorderline" method="post">
                 <%--            <div class="container">--%>
             <div class="row">
                 <div class="col-md-12">
@@ -55,12 +55,13 @@
                     </div>
 
                     <div class="col-md-3">
-                        <input type="submit" value="Bestil" class="btn btn-primary">
+                        <input type="submit" value="læg i kurv" class="btn btn-primary">
 
                     </div>
                 </div>
             </div>
             </div>
+        </form>
 
 
             <table class="table">
@@ -80,17 +81,12 @@
                         <td>${orderline.quantity}</td>
                         <td>${orderline.price}</td>
                         <td> TBD</td>
-
-                            <%--                                        <td>--%>
-                            <%--                                            <button class="btn btn-danger " type="submit" name="delete"--%>
-                            <%--                                                    value="${orderline.orderId}">Slet--%>
-                            <%--                                            </button>--%>
-                            <%--                                        </td>--%>
                     </tr>
                 </c:forEach>
 
             </table>
-
+        <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
+            <input type="submit" value="Bestil ordre" class="btn btn-primary">
 
         </form>
 

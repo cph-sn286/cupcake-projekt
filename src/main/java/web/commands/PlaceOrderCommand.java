@@ -27,56 +27,38 @@ public class PlaceOrderCommand extends CommandProtectedPage {
 //        skal være via facade
 
 //        beregner pris på ordre som består af enkelt ordrelinje
-        int bottomId = Integer.parseInt(request.getParameter("bund"));
-        int topId = Integer.parseInt(request.getParameter("top"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//        int bottomId = Integer.parseInt(request.getParameter("bund"));
+//        int topId = Integer.parseInt(request.getParameter("top"));
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
+////
+//        IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
+//        IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
+//
+//        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
 
-        IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
-        IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
-
-        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
 
         List<Orderline> orderlines = null;
 
         if (session.getAttribute("orderlineList") == null) {
-            orderlines=new ArrayList<>();
-            orderlines.add(orderline);
+            session.setAttribute("besked", "der er ingen varer i indkøbskurven");
         }
         if (session.getAttribute("orderlineList") != null) {
-            orderlines= (List<Orderline>) session.getAttribute("orderlineList");
-                        orderlines.add(orderline);
-        }
+            orderlines = (List<Orderline>) session.getAttribute("orderlineList");
 
 
-
-
-
-//        String[] hobbies = request.getParameterValues("hobby");
-//        List<String> hobbyListStrings = null;
-//        if (hobbies != null) {
-//            hobbyListStrings = Arrays.asList(hobbies);
-//        }
-//
-//        List<Integer> hobbyListIntegers = new ArrayList<>();
-//        for (String hobbyListItem : hobbyListStrings) {
-//            hobbyListIntegers.add(Integer.parseInt(hobbyListItem));
-//        }
-//
 //        getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
-
-//        request.setAttribute("hobbies", hobbyListIntegers);
-
-        session.setAttribute("orderlineList", orderlines);
+//            int userId = session.getAttribute("userid");
 
 
 //        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
 
-        double totalPrice = orderline.getPrice();
-        Order order = new Order(3, "xx:xx", totalPrice);
+//        double totalPrice = orderline.getPrice();
+            Order order = new Order(4, "xx:xx", 35);
 
-//        userMapper.insertOrder(order, orderline);
+            userMapper.insertOrder(order, orderlines);
 
 
+        }
         return pageToShow;
     }
 }

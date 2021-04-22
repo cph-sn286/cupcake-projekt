@@ -34,6 +34,7 @@ public abstract class Command
         commands.put("creditCalculator", new CreditCalculator("customerpage","customer"));
 
         commands.put("placeorder", new PlaceOrderCommand("customerpage", "customer"));
+        commands.put("placeorderline", new PlaceOrderlineCommand("customerpage", "customer"));
 
     }
 
