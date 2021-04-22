@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PlaceOrderCommand extends CommandUnprotectedPage {
-    public PlaceOrderCommand(String pageToShow) {
-        super(pageToShow);
+public class PlaceOrderCommand extends CommandProtectedPage {
+    public PlaceOrderCommand(String pageToShow, String role) {
+        super(pageToShow, role);
 //        husk at sætte facade ind
     }
 
