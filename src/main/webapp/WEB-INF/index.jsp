@@ -21,7 +21,7 @@
         <h2 class="text-center">Velkommen Til Olsker Cupcakes</h2>
 
         <div style="margin-top: 3em;margin-bottom: 3em;">
-            <h5 class="text-center">Vi har øens bedste cupcakes. Se hvores udvalg her:</h5>
+            <h5 class="text-center">Vi har øens bedste cupcakes. Se vores udvalg her:</h5>
             </b>
         </div>
         <div style="margin-top: 3em;margin-bottom: 3em;">
