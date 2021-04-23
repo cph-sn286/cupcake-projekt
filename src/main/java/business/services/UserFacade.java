@@ -51,7 +51,7 @@ public class UserFacade {
     }
 
     public IngridiensTop getIngridiensTopById(int topId) throws UserException {
-        return userMapper.getIngridiensTopsList();
+        return userMapper.getIngridiensTopById(topId);
     }
 
 }
