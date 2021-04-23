@@ -1,9 +1,6 @@
 package web.commands;
 
-import business.entities.IngridiensBottom;
-import business.entities.IngridiensTop;
-import business.entities.Order;
-import business.entities.Orderline;
+import business.entities.*;
 import business.exceptions.UserException;
 import business.persistence.UserMapper;
 
@@ -25,7 +22,7 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
         UserMapper userMapper = new UserMapper(database);
 //        skal være via facade
 
-//        beregner pris på ordre som består af enkelt ordrelinje
+
         int bottomId = Integer.parseInt(request.getParameter("bund"));
         int topId = Integer.parseInt(request.getParameter("top"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -33,48 +30,39 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
         IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
         IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
 
-        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
+        Cupcake newCupcake = new Cupcake(ingridiensBottom, ingridiensTop);
+        Orderline newOrderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
 
         List<Orderline> orderlines = null;
 
         if (session.getAttribute("orderlineList") == null) {
-            orderlines=new ArrayList<>();
-            orderlines.add(orderline);
+            orderlines = new ArrayList<>();
+            orderlines.add(newOrderline);
+            session.setAttribute("orderlineList", orderlines);
+            System.out.println("vi nåede til at tilføje ny ordrelinjeliste");
+            return pageToShow;
         }
-        if (session.getAttribute("orderlineList") != null) {
-            orderlines= (List<Orderline>) session.getAttribute("orderlineList");
-                        orderlines.add(orderline);
+
+//        if (session.getAttribute("orderlineList") != null) {
+
+        orderlines = (List<Orderline>) session.getAttribute("orderlineList");
+
+//        undersøger om den nye cupcake allerede findes i listen
+        for (Orderline oldOrderline : orderlines) {
+            Cupcake oldCupcake = new Cupcake(oldOrderline.getIngridiensBottom(), oldOrderline.getIngridiensTop());
+            if (newCupcake.equals(oldCupcake)) {
+                int newQuantity = newOrderline.getQuantity() + oldOrderline.getQuantity();
+                oldOrderline.setQuantity(newQuantity);
+                session.setAttribute("orderlineList", orderlines);
+                System.out.println("vi nåede til to ens");
+                return pageToShow;
+            }
         }
 
-
-
-
-
-//        String[] hobbies = request.getParameterValues("hobby");
-//        List<String> hobbyListStrings = null;
-//        if (hobbies != null) {
-//            hobbyListStrings = Arrays.asList(hobbies);
-//        }
-//
-//        List<Integer> hobbyListIntegers = new ArrayList<>();
-//        for (String hobbyListItem : hobbyListStrings) {
-//            hobbyListIntegers.add(Integer.parseInt(hobbyListItem));
-//        }
-//
-//        getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
-
-//        request.setAttribute("hobbies", hobbyListIntegers);
-
+//        hvis den nytilføjede cupcake ikke findes i listen, tilføjes den
+        orderlines.add(newOrderline);
         session.setAttribute("orderlineList", orderlines);
-
-
-//        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
-
-//        double totalPrice = orderline.getPrice();
-//        Order order = new Order(3, "xx:xx", totalPrice);
-
-//        userMapper.insertOrder(order, orderline);
-
+        System.out.println("vi nåede hele vejen igennem");
 
         return pageToShow;
     }
