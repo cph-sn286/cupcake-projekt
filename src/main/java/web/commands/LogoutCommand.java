@@ -17,8 +17,8 @@ public class LogoutCommand extends CommandUnprotectedPage {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)  {
         HttpSession session = request.getSession(false);
+        session.invalidate();
         if(session != null){
-            session.invalidate();
         }
         return REDIRECT_INDICATOR + request.getContextPath();
     }
