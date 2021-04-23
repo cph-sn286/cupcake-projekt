@@ -15,10 +15,10 @@
         <div class="col-sm-8">
 
             <h1>Hello ${sessionScope.email} </h1>
-            <h3>This is a list of all customers</h3>
+            <h3>du er det rigtige sted</h3>
 
 
-            <form action="${pageContext.request.contextPath}/fc/managecustomers" method="post">
+            <form action="${pageContext.request.contextPath}/fc/seecustomerhistorik" method="post">
                 <table class="table">
                     <thead>
                     <th>UserId</th>
@@ -28,7 +28,7 @@
                     <th>Saldo</th>
                     <th></th>
                     </thead>
-                    <c:forEach var="userItem" items="${applicationScope.userList}">
+                    <c:forEach var="userItem" items="${applicationScope.user}">
                         <tr>
                             <td>${userItem.id}</td>
                             <td>${userItem.email}</td>
@@ -36,14 +36,9 @@
                             <td>${userItem.role}</td>
                             <td>${userItem.saldo}</td>
                             <td>
-                                <button class="btn btn-danger " type="submit" name="delete"
-                                        value="${userItem.id}">slet kunde!
-                                </button>
-                                        <button class="btn btn-dark " type="submit" name="seeCustomer">
-                                                <a href="${pageContext.request.contextPath}/fc/seecustomerhistorik">se kunde</a>
-                                        </button>
-                            </td>
-
+<%--                                <button class="btn btn-danger " type="submit" name="delete"--%>
+<%--                                        value="${userItem.id}">slet kunde!--%>
+<%--                                </button>--%>
 
                         </tr>
                     </c:forEach>

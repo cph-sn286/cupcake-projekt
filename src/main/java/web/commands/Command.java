@@ -31,6 +31,7 @@ public abstract class Command
 
         commands.put("manageorders", new ManageCupcakeCommand("managecupcakepage", "employee"));
         commands.put("managecustomers", new ManageCustomersCommand("managecustomerpage", "employee"));
+        commands.put("seecustomerhistorik", new CustomerHistorikCommand("seecustomerhistorikpage", "employee"));
         commands.put("customeraddcredit", new CommandProtectedPage("customeraddcredit", "customer"));
         commands.put("creditCalculator", new CreditCalculator("customerpage","customer"));
 

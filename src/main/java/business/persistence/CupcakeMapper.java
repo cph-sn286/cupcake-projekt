@@ -121,11 +121,11 @@ public class CupcakeMapper {
         }
     }
 
-            public List<User> getAllCustomers() throws UserException {
+    public List<User> getAllCustomers() throws UserException {
 
-            List<User> userList = new ArrayList<>();
-            try (Connection connection = database.connect()) {
-                String sql = "SELECT * FROM users WHERE users.role = 'customer'";
+        List<User> userList = new ArrayList<>();
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM users WHERE users.role = 'customer'";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -137,7 +137,7 @@ public class CupcakeMapper {
                     String password = rs.getString("password");
                     String role = rs.getString("role");
                     double saldo = rs.getDouble("saldo");
-                    userList.add(new User(user_id, email, password,role, saldo));
+                    userList.add(new User(user_id, email, password, role, saldo));
 
                 }
                 return userList;
@@ -147,6 +147,57 @@ public class CupcakeMapper {
         } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");
         }
+    }
+
+    public User getCustomerById(int user_id) throws UserException {
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM users WHERE user_id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, user_id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+
+
+                    String email = rs.getString("email");
+                    String password = rs.getString("password");
+                    String role = rs.getString("role");
+                    double saldo = rs.getDouble("saldo");
+                    return new User(email, password, role, saldo);
+                }
+                throw new UserException("Ordren findes ikke for order_id = " + user_id);
+
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+
+
+
+    public int deleteCustomer(int user_id) throws UserException {
+        try (Connection connection = database.connect()) {
+            String sql = "DELETE FROM users " +
+                    "WHERE user_id = ? AND saldo = 0";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, user_id);
+                int rowaAffected = ps.executeUpdate();
+                return rowaAffected;
+
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+
+        } catch (SQLException ex) {
+            throw new UserException(ex.getMessage());
+        }
+
+
     }
 
 }

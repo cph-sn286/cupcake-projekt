@@ -36,4 +36,12 @@ public class CupcakeFacade
     public List<User> getAllCustomers() throws UserException {
         return cupcakeMapper.getAllCustomers();
     }
+
+    public int deleteCustomer(int user_id) throws UserException{
+        return cupcakeMapper.deleteCustomer(user_id);
+    }
+
+    public User getCustomerById(int user_id) throws UserException {
+        return cupcakeMapper.getCustomerById(user_id);
+    }
 }
