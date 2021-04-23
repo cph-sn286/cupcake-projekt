@@ -23,11 +23,14 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
         UserFacade userFacade = new UserFacade(database);
 
         String bottomIdString = request.getParameter("bund");
-        int topId = Integer.parseInt(request.getParameter("top"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String topIdString = request.getParameter("top");
+        String quantityString = request.getParameter("quantity");
 
-        if (bottomIdString != null) {
+        if (bottomIdString != null && topIdString !=null && quantityString !=null) {
             int bottomId = Integer.parseInt(bottomIdString);
+            int topId = Integer.parseInt(topIdString);
+            int quantity = Integer.parseInt(quantityString);
+
             IngridiensBottom ingridiensBottom = userFacade.getIngridiensBottomsById(bottomId);
             IngridiensTop ingridiensTop = userFacade.getIngridiensTopById(topId);
 
@@ -83,10 +86,11 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
             return pageToShow;
         }
 
-
+        System.out.println("vi er lige før delete");
         String deleteId = request.getParameter("delete");
-        String incId = request.getParameter("inc");
-        String decId = request.getParameter("dec");
+        System.out.println("vi har hentet et delete -statement");
+//        String incId = request.getParameter("inc");
+//        String decId = request.getParameter("dec");
 
         if (deleteId != null) {
             List<Orderline> orderlines;
@@ -99,8 +103,10 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
                     orderlines.remove(orderline);
 //                    så skal vi have navngivet orderlineId
                     System.out.println("vi mangler kun at stemple");
-
-                    session.setAttribute("orderlineList", null);
+//if(orderlines==null)
+//                    session.setAttribute("orderlineList", orderlines);
+                    session.removeAttribute("orderlineList");
+                    System.out.println("vi nåede forbi");
 
                 }
             }
