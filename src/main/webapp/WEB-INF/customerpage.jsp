@@ -83,7 +83,6 @@
             <th>Bund</th>
             <th>Antal</th>
             <th>pris</th>
-            <th>Afhentning</th>
             <th>Ordretidspunkt</th>
             <th></th>
             </thead>
@@ -94,7 +93,6 @@
                     <td>${orderline.ingridiensTop.flavor}</td>
                     <td>${orderline.quantity}</td>
                     <td>${orderline.price}</td>
-                    <td> TBD</td>
                 </tr>
             </c:forEach>
 

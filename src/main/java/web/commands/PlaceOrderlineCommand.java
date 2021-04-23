@@ -53,6 +53,7 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
             if (newCupcake.equals(oldCupcake)) {
                 int newQuantity = newOrderline.getQuantity() + oldOrderline.getQuantity();
                 oldOrderline.setQuantity(newQuantity);
+                oldOrderline.setPrice(oldCupcake.getIngridiensBottom(), oldCupcake.getIngridiensTop());
                 session.setAttribute("orderlineList", orderlines);
                 System.out.println("vi nåede til to ens");
                 return pageToShow;
