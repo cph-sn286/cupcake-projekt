@@ -1,9 +1,12 @@
 package web;
 
+import business.entities.User;
 import business.exceptions.UserException;
 import business.persistence.CupcakeMapper;
 import business.persistence.Database;
 import business.persistence.UserMapper;
+import business.services.CupcakeFacade;
+import business.services.UserFacade;
 import web.commands.*;
 
 import java.io.IOException;
@@ -36,21 +39,27 @@ public class FrontController extends HttpServlet {
 
         // Initialize whatever global datastructures needed here:
 
-//        merge-konflikt fra US-1
-        UserMapper userMapper = new UserMapper(database);
-        CupcakeMapper cupcakeMapper = new CupcakeMapper(database);
+        CupcakeFacade cupcakeFacade = new CupcakeFacade(database);
+        UserFacade userFacade = new UserFacade(database);
+
+
         try {
-            getServletContext().setAttribute("IngridiensBottomList", userMapper.getIngridiensBottomsList());
-            getServletContext().setAttribute("IngridiensTopList", userMapper.getIngridiensTopsList());
+            getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
+
         } catch (UserException ex) {
             Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
         }
 
-//            tilføjet fra branch US-1
+
+        try {
+            getServletContext().setAttribute("IngridiensBottomList", userFacade.getIngridiensBottomsList());
+            getServletContext().setAttribute("IngridiensTopList", userFacade.getIngridiensTopsList());
+        } catch (UserException ex2) {
+            Logger.getLogger("web").log(Level.SEVERE, ex2.getMessage(), ex2);
+        }
+
 
     }
-
-
 
 
     protected void processRequest(

@@ -1,5 +1,7 @@
 package business.entities;
 
+import java.util.Objects;
+
 public class IngridiensBottom {
     private int bottomId;
     private String flavor;
@@ -9,6 +11,19 @@ public class IngridiensBottom {
         this.bottomId = bottomId;
         this.flavor = flavor;
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IngridiensBottom that = (IngridiensBottom) o;
+        return bottomId == that.bottomId && price == that.price && flavor.equals(that.flavor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bottomId, flavor, price);
     }
 
     public int getBottomId() {

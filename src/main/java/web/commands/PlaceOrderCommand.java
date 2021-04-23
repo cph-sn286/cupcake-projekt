@@ -1,46 +1,84 @@
 package web.commands;
 
-import business.entities.IngridiensBottom;
-import business.entities.IngridiensTop;
-import business.entities.Order;
-import business.entities.Orderline;
+import business.entities.*;
 import business.exceptions.UserException;
 import business.persistence.UserMapper;
+import business.services.UserFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class PlaceOrderCommand extends CommandUnprotectedPage {
-    public PlaceOrderCommand(String pageToShow) {
-        super(pageToShow);
+public class PlaceOrderCommand extends CommandProtectedPage {
+    public PlaceOrderCommand(String pageToShow, String role) {
+        super(pageToShow, role);
 //        husk at sætte facade ind
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         HttpSession session = request.getSession();
-        UserMapper userMapper = new UserMapper(database);
+//        UserMapper userMapper = new UserMapper(database);
+        UserFacade userFacade = new UserFacade(database);
+//        String pickupTime2 "hovsa";
+//        System.out.println(pickupTime2);
+
+//        int pickupTime= (String)request.getAttribute("pickuptime");
+        String pickupTime = request.getParameter("pickuptime");
+        System.out.println(pickupTime);
+
 //        skal være via facade
 
 //        beregner pris på ordre som består af enkelt ordrelinje
-        int bottomId = Integer.parseInt(request.getParameter("bund"));
-        int topId = Integer.parseInt(request.getParameter("top"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-
-        IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
-        IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
-
-        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
-        double totalPrice = orderline.getPrice();
-
-//        for at lave en indkøbskurv skal vi have en liste af ordrelinjer som vi mapper
-
-        Order order = new Order(4, "18:30", totalPrice);
-
-        userMapper.insertOrder(order, orderline);
+//        int bottomId = Integer.parseInt(request.getParameter("bund"));
+//        int topId = Integer.parseInt(request.getParameter("top"));
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
+////
+//        IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
+//        IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
+//
+//        Orderline orderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
 
 
-        return pageToShow;
+        List<Orderline> orderlines = null;
+
+        if (session.getAttribute("orderlineList") == null) {
+
+
+            session.setAttribute("errormessage", "Du har ingen varer i din kurv");
+            return "customerpage";
+        }
+        if (session.getAttribute("orderlineList") != null) {
+            orderlines = (List<Orderline>) session.getAttribute("orderlineList");
+
+
+            double totalPrice = 0;
+            for (Orderline orderline : orderlines) {
+                totalPrice = totalPrice + orderline.getPrice();
+
+            }
+            System.out.println("samlet pris er " + totalPrice);
+            System.out.printf("saldo er" + session.getAttribute("saldo"));
+            if ((double) session.getAttribute("saldo") >= totalPrice) {
+                System.out.println("der var penge nok");
+                double nySaldo = (double) session.getAttribute("saldo") - totalPrice;
+                int userId = (int) session.getAttribute("userid");
+                Order order = new Order(userId, pickupTime, totalPrice);
+                userFacade.insertOrder(order, orderlines);
+                session.setAttribute("saldo", nySaldo);
+                userFacade.updateUser(nySaldo, userId);
+                session.setAttribute("ordre", order);
+                session.setAttribute("orderlineRecieptList", orderlines);
+                session.setAttribute("orderlineList", null);
+                return pageToShow;
+            } else {
+                session.setAttribute("errormessage", "Ups du har ikke penge nok på kontoen Tank op for at bestille:)");
+
+            }
+        }
+        return "customerpage";
     }
 }

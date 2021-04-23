@@ -14,36 +14,106 @@
         You are now logged in as a Customer of our wonderful site.
         Role: ${sessionScope.role}
 
-        <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
-            <select name="bund" id="bund">
-                <option value="" selected disabled hidden>vælg bund</option>
-                <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
-                    <option value="${bund.bottomId}">${bund.flavor} ${bund.price} kr</option>
+        <form action="${pageContext.request.contextPath}/fc/placeorderline" method="post">
+                <%--            <div class="container">--%>
+            <div class="row">
+                <div class="col-md-12">
 
-                </c:forEach>
+                    <div class="col-md-3">
+                        <select name="bund" id="bund">
+                            <option value="" selected disabled hidden>vælg bund</option>
+                            <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
+                                <option value="${bund.bottomId}">${bund.flavor} ${bund.price} kr</option>
+
+                            </c:forEach>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div style="margin-top: 3em;margin-bottom: 3em;">
+                            <select name="top" id="top">
+                                <option value="" selected disabled hidden>vælg top</option>
+                                <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
+                                    <option value="${top.topId}"> ${top.flavor} ${top.price} kr</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <select name="quantity" id="quantity">
+                                <option value="" selected disabled hidden>vælg antal</option>
+                                <option value="1">1</option>
+                        </div>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        </select>
+
+                    </div>
+
+
                 </div>
+
+                <div class="col-md-3">
+                    <input type="submit" value="læg i kurv" class="btn btn-primary">
+
+                </div>
+            </div>
+        </form>
+        <%--            </div>--%>
+
+
+        <table class="table">
+            <thead>
+            <th>Top</th>
+            <th>Bund</th>
+            <th>Antal</th>
+            <th>pris</th>
+                <%--            <th>Ordretidspunkt</th>--%>
+            <th></th>
+            </thead>
+
+            <c:forEach var="orderline" items="${sessionScope.orderlineList}">
+                <tr>
+                    <td>${orderline.ingridiensBottom.flavor}</td>
+                    <td>${orderline.ingridiensTop.flavor}</td>
+                    <td>${orderline.quantity}</td>
+                    <td>${orderline.price}</td>
+                </tr>
+            </c:forEach>
+
+        </table>
+
+        <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
+
+
+
+            <select name="pickuptime" id="pickuptime">
+                <option value="ASAP" selected disabled hidden>foreslå tidspunkt</option>
+
+                <option value="ASAP">ASAP</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
             </select>
 
-            <div style="margin-top: 3em;margin-bottom: 3em;">
-                <select name="top" id="top">
-                    <option value="" selected disabled hidden>vælg top</option>
-                    <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
-                        <option value="${top.topId}"> ${top.flavor} ${top.price} kr</option>
-                    </c:forEach>
-                </select>
 
+
+
+            <p>samlet pris: ${sessionScope.samletpris} kr</p>
+
+            <input type="submit" value="Bestil ordre" class="btn btn-primary">
+
+            <c:if test="${not empty sessionScope.errormessage}">
+                <p style="font-size: large">${sessionScope.errormessage}</p>
+            </c:if>
+                <%--        </div>--%>
             </div>
 
-            <select name="quantity" id="quantity">
-                <option value="" selected disabled hidden>vælg antal</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-
-            <input type="submit" value="Bestil" class="btn btn-primary">
         </form>
 
     </jsp:body>

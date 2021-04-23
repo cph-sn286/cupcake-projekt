@@ -186,7 +186,7 @@ public class UserMapper {
         }
     }
 
-    public void insertOrder(Order order, Orderline orderline) throws UserException {
+    public void insertOrder(Order order, List<Orderline> orderlines) throws UserException {
 
 
         try (Connection connection = database.connect()) {
@@ -204,11 +204,11 @@ public class UserMapper {
                 ids.next();
                 int orderId = ids.getInt(1);
 
+
+                for (Orderline orderline : orderlines) {
                 insertOrderline(orderline, orderId);
 
-//                for (Integer hobbyId : hobbyList) {
-//                    insertIntoLinkHobbyBmiEntry(bmiEntryId, (int) hobbyId);
-//                }
+                }
 
 
             } catch (SQLException ex) {
@@ -219,5 +219,23 @@ public class UserMapper {
         }
     }
 
+    public int updateUser(double saldo, int userId) throws UserException {
+        try (Connection connection = database.connect()) {
+            String sql = "UPDATE users SET saldo = ? WHERE user_id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setDouble(1, saldo);
+                ps.setInt(2, userId);
+                int rowsInserted = ps.executeUpdate();
+                return rowsInserted;
+
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
 
 }

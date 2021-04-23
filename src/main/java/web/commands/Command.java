@@ -33,7 +33,10 @@ public abstract class Command
         commands.put("customeraddcredit", new CommandProtectedPage("customeraddcredit", "customer"));
         commands.put("creditCalculator", new CreditCalculator("customerpage","customer"));
 
-        commands.put("placeorder", new PlaceOrderCommand("customerpage"));
+
+        commands.put("placeorder", new PlaceOrderCommand("showrecieptcostumer", "customer"));
+        commands.put("placeorderline", new PlaceOrderlineCommand("customerpage", "customer"));
+
 
     }
 

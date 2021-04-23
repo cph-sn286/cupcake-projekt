@@ -1,8 +1,6 @@
 package business.services;
 
-import business.entities.IngridiensBottom;
-import business.entities.IngridiensTop;
-import business.entities.User;
+import business.entities.*;
 import business.persistence.Database;
 import business.persistence.UserMapper;
 import business.exceptions.UserException;
@@ -13,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class UserFacade
-{
+public class UserFacade {
 
 
     UserMapper userMapper;
@@ -41,6 +38,22 @@ public class UserFacade
     public List<IngridiensBottom> getIngridiensBottomsList() throws UserException {
         return userMapper.getIngridiensBottomsList();
 
+    }
+
+    public int updateUser(double saldo, int userId) throws UserException {
+        return userMapper.updateUser(saldo, userId);
+    }
+
+    public IngridiensBottom getIngridiensBottomsById(int bottomId) throws UserException {
+        return userMapper.getIngridiensBottomsById(bottomId);
+    }
+
+    public IngridiensTop getIngridiensTopById(int topId) throws UserException {
+        return userMapper.getIngridiensTopById(topId);
+    }
+
+    public void insertOrder(Order order, List<Orderline> orderlines) throws UserException {
+        userMapper.insertOrder(order, orderlines);
     }
 
 }

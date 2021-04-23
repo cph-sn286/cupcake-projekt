@@ -28,6 +28,7 @@
                     <th>OrderTime</th>
                     <th></th>
                     </thead>
+
                     <c:forEach var="orderItem" items="${applicationScope.orderList}">
                         <tr>
                             <td>${orderItem.order_id}</td>
