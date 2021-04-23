@@ -87,29 +87,41 @@
 
         </table>
         <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
+
+
+                <%--        <div class="col-md-3">--%>
+            <select name="pickuptime" id="pickuptime">
+                <option value="" selected disabled hidden>foreslå tidspunkt</option>
+
+                <option value="ASAP">ASAP</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+            </select>
+
+<%--                    <select name="quantity" id="quantity">--%>
+<%--                        <option value="" selected disabled hidden>vælg antal</option>--%>
+<%--                        <option value="1">1</option>--%>
+<%--                        </div>--%>
+<%--                        <option value="2">2</option>--%>
+<%--                        <option value="3">3</option>--%>
+<%--                        <option value="4">4</option>--%>
+<%--                        <option value="5">5</option>--%>
+<%--                    </select>--%>
+
+
+            <p>samlet pris: ${sessionScope.samletpris} kr</p>
+
             <input type="submit" value="Bestil ordre" class="btn btn-primary">
+                <%--        udskriv noget --%>
+            <c:if test="${not empty sessionScope.errormessage}">
+                <p style="font-size: large">${sessionScope.errormessage}</p>
+            </c:if>
+                <%--        </div>--%>
+            </div>
 
         </form>
-
-
-        <%--        <div class="col-md-3">--%>
-        <select name="quantity" id="pickuptime">
-            <option value="" selected disabled hidden>foreslå tidspunkt</option>
-
-            <option value="11:00">11:00</option>
-            <option value="12:00">12:00</option>
-            <option value="13:00">13:00</option>
-            <option value="14:00">14:00</option>
-        </select>
-        <p>samlet pris: ${sessionScope.samletpris} kr</p>
-
-<%--        udskriv noget --%>
-        <c:if test="${not empty sessionScope.lowsaldomessage}">
-            <p style="font-size: large">${sessionScope.lowsaldomessage}</p>
-        </c:if>
-        <%--        </div>--%>
-        </div>
-
 
     </jsp:body>
 

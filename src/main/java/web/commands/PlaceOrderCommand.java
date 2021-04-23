@@ -23,7 +23,8 @@ public class PlaceOrderCommand extends CommandProtectedPage {
         HttpSession session = request.getSession();
 //        UserMapper userMapper = new UserMapper(database);
         UserFacade userFacade = new UserFacade(database);
-        String pickuptime = (request.getParameter("pickuptime"));
+        String pickupTime = (String)request.getAttribute("pickuptime");
+        System.out.println(pickupTime);
 
 //        skal være via facade
 
@@ -41,8 +42,9 @@ public class PlaceOrderCommand extends CommandProtectedPage {
         List<Orderline> orderlines = null;
 
         if (session.getAttribute("orderlineList") == null) {
-            session.setAttribute("besked", "der er ingen varer i indkøbskurven");
-            return pageToShow;
+
+            session.setAttribute("errormessage", "Du har ingen varer i din kurv");
+            return "customerpage";
         }
         if (session.getAttribute("orderlineList") != null) {
             orderlines = (List<Orderline>) session.getAttribute("orderlineList");
@@ -58,7 +60,7 @@ public class PlaceOrderCommand extends CommandProtectedPage {
                 System.out.println("der var penge nok");
                 double nySaldo = (double) session.getAttribute("saldo") - totalPrice;
                 int userId = (int) session.getAttribute("userid");
-                Order order = new Order(userId, "xx:xx", totalPrice);
+                Order order = new Order(userId, "pickupTime", totalPrice);
                 userFacade.insertOrder(order, orderlines);
                 session.setAttribute("saldo", nySaldo);
                 userFacade.updateUser(nySaldo, userId);
@@ -67,7 +69,8 @@ public class PlaceOrderCommand extends CommandProtectedPage {
                 session.setAttribute("orderlineList", null);
                 return pageToShow;
             } else {
-                session.setAttribute("lowsaldomessage", "Ups du har ikke penge nok på kontoen Tank op for at bestille:)");
+                session.setAttribute("errormessage", "Ups du har ikke penge nok på kontoen Tank op for at bestille:)");
+
             }
         }
         return "customerpage";

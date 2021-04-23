@@ -35,6 +35,7 @@
 
         </table>
         <p>faktureret beløb: ${sessionScope.ordre.totalPrice} kr. </p>
+        <p>Du kan hente din ordre kl.: ${sessionScope.ordre.pickupTime} kr. </p>
         <p>Vi ser om vi kan finde noget mel. Det bliver nok lidt ulækkert. </p>
 
     </jsp:body>
