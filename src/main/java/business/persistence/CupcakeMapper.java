@@ -125,7 +125,7 @@ public class CupcakeMapper {
 
             List<User> userList = new ArrayList<>();
             try (Connection connection = database.connect()) {
-                String sql = "SELECT * FROM users";
+                String sql = "SELECT * FROM users WHERE users.role = 'customer'";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
