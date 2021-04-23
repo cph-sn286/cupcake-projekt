@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class UserFacade
-{
+public class UserFacade {
 
 
     UserMapper userMapper;
@@ -42,8 +41,17 @@ public class UserFacade
         return userMapper.getIngridiensBottomsList();
 
     }
-    public int updateUser( double saldo, int userId) throws UserException {
+
+    public int updateUser(double saldo, int userId) throws UserException {
         return userMapper.updateUser(saldo, userId);
+    }
+
+    public IngridiensBottom getIngridiensBottomsById(int bottomId) throws UserException {
+        return userMapper.getIngridiensBottomsById(bottomId);
+    }
+
+    public IngridiensTop getIngridiensTopById(int topId) throws UserException {
+        return userMapper.getIngridiensTopsList();
     }
 
 }

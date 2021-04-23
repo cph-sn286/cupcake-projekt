@@ -3,6 +3,7 @@ package web.commands;
 import business.entities.*;
 import business.exceptions.UserException;
 import business.persistence.UserMapper;
+import business.services.UserFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,37 +14,36 @@ import java.util.List;
 public class PlaceOrderlineCommand extends CommandProtectedPage {
     public PlaceOrderlineCommand(String pageToShow, String role) {
         super(pageToShow, role);
-//        husk at sætte facade ind
+
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         HttpSession session = request.getSession();
-        UserMapper userMapper = new UserMapper(database);
-//        skal være via facade
-
+        UserFacade userFacade = new UserFacade(database);
 
         int bottomId = Integer.parseInt(request.getParameter("bund"));
         int topId = Integer.parseInt(request.getParameter("top"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        IngridiensBottom ingridiensBottom = userMapper.getIngridiensBottomsById(bottomId);
-        IngridiensTop ingridiensTop = userMapper.getIngridiensTopById(topId);
+        IngridiensBottom ingridiensBottom = userFacade.getIngridiensBottomsById(bottomId);
+        IngridiensTop ingridiensTop = userFacade.getIngridiensTopById(topId);
 
         Cupcake newCupcake = new Cupcake(ingridiensBottom, ingridiensTop);
         Orderline newOrderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
 
-        List<Orderline> orderlines = null;
+        List<Orderline> orderlines;
 
+//        hvis ordrelinjelisten er tom skal den oprettes
         if (session.getAttribute("orderlineList") == null) {
             orderlines = new ArrayList<>();
             orderlines.add(newOrderline);
             session.setAttribute("orderlineList", orderlines);
-            System.out.println("vi nåede til at tilføje ny ordrelinjeliste");
+
             return pageToShow;
         }
 
-//        if (session.getAttribute("orderlineList") != null) {
+//      hvis ordrelinjeListen har indhold:   (if (session.getAttribute("orderlineList") != null) )
 
         orderlines = (List<Orderline>) session.getAttribute("orderlineList");
 
@@ -55,7 +55,7 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
                 oldOrderline.setQuantity(newQuantity);
                 oldOrderline.setPrice(oldCupcake.getIngridiensBottom(), oldCupcake.getIngridiensTop(), newQuantity);
                 session.setAttribute("orderlineList", orderlines);
-                System.out.println("vi nåede til to ens");
+
                 return pageToShow;
             }
         }
@@ -63,7 +63,6 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
 //        hvis den nytilføjede cupcake ikke findes i listen, tilføjes den
         orderlines.add(newOrderline);
         session.setAttribute("orderlineList", orderlines);
-        System.out.println("vi nåede hele vejen igennem");
 
         return pageToShow;
     }
