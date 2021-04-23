@@ -17,32 +17,23 @@
             <h1>Hello ${sessionScope.email} </h1>
             <h3>du er det rigtige sted</h3>
 
-
-            <form action="${pageContext.request.contextPath}/fc/seecustomerhistorik" method="post">
-                <table class="table">
-                    <thead>
-                    <th>UserId</th>
-                    <th>Email</th>
-                    <th>Passwd</th>
-                    <th>role</th>
-                    <th>Saldo</th>
-                    <th></th>
-                    </thead>
-                    <c:forEach var="userItem" items="${applicationScope.user}">
-                        <tr>
-                            <td>${userItem.id}</td>
-                            <td>${userItem.email}</td>
-                            <td>${userItem.password}</td>
-                            <td>${userItem.role}</td>
-                            <td>${userItem.saldo}</td>
-                            <td>
-<%--                                <button class="btn btn-danger " type="submit" name="delete"--%>
-<%--                                        value="${userItem.id}">slet kunde!--%>
-<%--                                </button>--%>
-
-                        </tr>
-                    </c:forEach>
-                </table>
+            <table class="table">
+                <thead>
+                <th>UserId</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Saldo</th>
+                <th></th>
+                </thead>
+                    <tr>
+                        <td>${requestScope.valgtBruger.id}</td>
+                        <td>${requestScope.valgtBruger.email}</td>
+                        <td>${requestScope.valgtBruger.password}</td>
+                        <td>${requestScope.valgtBruger.role}</td>
+                        <td>${requestScope.valgtBruger.saldo}</td>
+                    </tr>
+            </table>
 
                 <c:if test="${not empty requestScope.error}">
                     <br/>

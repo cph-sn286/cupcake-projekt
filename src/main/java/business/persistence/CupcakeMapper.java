@@ -159,12 +159,11 @@ public class CupcakeMapper {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
 
-
                     String email = rs.getString("email");
                     String password = rs.getString("password");
                     String role = rs.getString("role");
                     double saldo = rs.getDouble("saldo");
-                    return new User(email, password, role, saldo);
+                    return new User(user_id,email, password, role, saldo);
                 }
                 throw new UserException("Ordren findes ikke for order_id = " + user_id);
 
@@ -175,8 +174,6 @@ public class CupcakeMapper {
             throw new UserException("Connection to database could not be established");
         }
     }
-
-
 
 
     public int deleteCustomer(int user_id) throws UserException {

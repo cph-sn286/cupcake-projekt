@@ -28,15 +28,13 @@ public abstract class Command
         commands.put("registercommand", new RegisterCommand(""));
         commands.put("customerpage", new CommandProtectedPage("customerpage", "customer"));
         commands.put("employeepage", new CommandProtectedPage("employeepage", "employee"));
-
         commands.put("manageorders", new ManageCupcakeCommand("managecupcakepage", "employee"));
         commands.put("managecustomers", new ManageCustomersCommand("managecustomerpage", "employee"));
-        commands.put("seecustomerhistorik", new CustomerHistorikCommand("seecustomerhistorikpage", "employee"));
         commands.put("customeraddcredit", new CommandProtectedPage("customeraddcredit", "customer"));
         commands.put("creditCalculator", new CreditCalculator("customerpage","customer"));
-
         commands.put("placeorder", new PlaceOrderCommand("customerpage"));
 
+        commands.put("seecustomerhistorik", new CustomerHistorikCommand("seecustomerhistorikpage", "employee"));
     }
 
     public static Command fromPath(
