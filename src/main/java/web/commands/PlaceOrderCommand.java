@@ -21,7 +21,7 @@ public class PlaceOrderCommand extends CommandProtectedPage {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         HttpSession session = request.getSession();
-        UserMapper userMapper = new UserMapper(database);
+//        UserMapper userMapper = new UserMapper(database);
         UserFacade userFacade = new UserFacade(database);
         String pickuptime = (request.getParameter("pickuptime"));
 
@@ -50,19 +50,26 @@ public class PlaceOrderCommand extends CommandProtectedPage {
             double totalPrice = 0;
             for (Orderline orderline : orderlines) {
                 totalPrice = totalPrice + orderline.getPrice();
+
             }
+            System.out.println("samlet pris er " + totalPrice);
+            System.out.printf("saldo er" + session.getAttribute("saldo"));
             if ((double) session.getAttribute("saldo") >= totalPrice) {
+                System.out.println("der var penge nok");
                 double nySaldo = (double) session.getAttribute("saldo") - totalPrice;
                 int userId = (int) session.getAttribute("userid");
                 Order order = new Order(userId, "xx:xx", totalPrice);
-                userMapper.insertOrder(order, orderlines);
+                userFacade.insertOrder(order, orderlines);
                 session.setAttribute("saldo", nySaldo);
                 userFacade.updateUser(nySaldo, userId);
+                session.setAttribute("ordre", order);
+                session.setAttribute("orderlineRecieptList", orderlines);
                 session.setAttribute("orderlineList", null);
+                return pageToShow;
             } else {
-                session.setAttribute("message", "Ups du har ikke penge nok på kontoen Tank op for at bestille:)");
+                session.setAttribute("lowsaldomessage", "Ups du har ikke penge nok på kontoen Tank op for at bestille:)");
             }
         }
-        return pageToShow;
+        return "customerpage";
     }
 }

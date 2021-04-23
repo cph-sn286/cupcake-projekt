@@ -1,8 +1,6 @@
 package business.services;
 
-import business.entities.IngridiensBottom;
-import business.entities.IngridiensTop;
-import business.entities.User;
+import business.entities.*;
 import business.persistence.Database;
 import business.persistence.UserMapper;
 import business.exceptions.UserException;
@@ -52,6 +50,10 @@ public class UserFacade {
 
     public IngridiensTop getIngridiensTopById(int topId) throws UserException {
         return userMapper.getIngridiensTopById(topId);
+    }
+
+    public void insertOrder(Order order, List<Orderline> orderlines) throws UserException {
+        userMapper.insertOrder(order, orderlines);
     }
 
 }

@@ -56,10 +56,7 @@ public class FrontController extends HttpServlet {
             getServletContext().setAttribute("IngridiensTopList", userFacade.getIngridiensTopsList());
         } catch (UserException ex2) {
             Logger.getLogger("web").log(Level.SEVERE, ex2.getMessage(), ex2);
-
         }
-
-
     }
 
 

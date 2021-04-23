@@ -37,6 +37,7 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
 //        hvis ordrelinjelisten er tom skal den oprettes
         if (session.getAttribute("orderlineList") == null) {
             orderlines = new ArrayList<>();
+            session.setAttribute("samletpris", newOrderline.getPrice());
             orderlines.add(newOrderline);
             session.setAttribute("orderlineList", orderlines);
 
@@ -59,9 +60,16 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
                 return pageToShow;
             }
         }
+        orderlines.add(newOrderline);
+
+//        pris beregnes - så vi har den tilgængelig hver gang vi tilføjer til indkøbskurv
+        double totalPrice = 0;
+        for (Orderline orderline : orderlines) {
+            totalPrice = totalPrice + orderline.getPrice();
+        }
 
 //        hvis den nytilføjede cupcake ikke findes i listen, tilføjes den
-        orderlines.add(newOrderline);
+        session.setAttribute("samletpris", totalPrice);
         session.setAttribute("orderlineList", orderlines);
 
         return pageToShow;

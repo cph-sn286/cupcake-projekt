@@ -54,27 +54,16 @@
 
                     </div>
 
-                    <div class="col-md-3">
-                        <select name="quantity" id="pickuptime">
-                            <option value="" selected disabled hidden>vælg tidspunkt </option>
-                            <option value="1">1</option>
-                    </div>
-                    <option value="11:00">2</option>
-                    <option value="12:00">3</option>
-                    <option value="13:00">4</option>
-                    <option value="14:00">5</option>
-                    </select>
 
                 </div>
 
-                    <div class="col-md-3">
-                        <input type="submit" value="læg i kurv" class="btn btn-primary">
+                <div class="col-md-3">
+                    <input type="submit" value="læg i kurv" class="btn btn-primary">
 
-                    </div>
                 </div>
-            </div>
             </div>
         </form>
+        <%--            </div>--%>
 
 
         <table class="table">
@@ -83,7 +72,7 @@
             <th>Bund</th>
             <th>Antal</th>
             <th>pris</th>
-            <th>Ordretidspunkt</th>
+                <%--            <th>Ordretidspunkt</th>--%>
             <th></th>
             </thead>
 
@@ -101,6 +90,26 @@
             <input type="submit" value="Bestil ordre" class="btn btn-primary">
 
         </form>
+
+
+        <%--        <div class="col-md-3">--%>
+        <select name="quantity" id="pickuptime">
+            <option value="" selected disabled hidden>foreslå tidspunkt</option>
+
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+        </select>
+        <p>samlet pris: ${sessionScope.samletpris} kr</p>
+
+<%--        udskriv noget --%>
+        <c:if test="${not empty sessionScope.lowsaldomessage}">
+            <p style="font-size: large">${sessionScope.lowsaldomessage}</p>
+        </c:if>
+        <%--        </div>--%>
+        </div>
+
 
     </jsp:body>
 
