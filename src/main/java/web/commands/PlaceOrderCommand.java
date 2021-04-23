@@ -23,7 +23,11 @@ public class PlaceOrderCommand extends CommandProtectedPage {
         HttpSession session = request.getSession();
 //        UserMapper userMapper = new UserMapper(database);
         UserFacade userFacade = new UserFacade(database);
-        String pickupTime = (String)request.getAttribute("pickuptime");
+//        String pickupTime2 "hovsa";
+//        System.out.println(pickupTime2);
+
+//        int pickupTime= (String)request.getAttribute("pickuptime");
+        String pickupTime = request.getParameter("pickuptime");
         System.out.println(pickupTime);
 
 //        skal være via facade
@@ -60,7 +64,7 @@ public class PlaceOrderCommand extends CommandProtectedPage {
                 System.out.println("der var penge nok");
                 double nySaldo = (double) session.getAttribute("saldo") - totalPrice;
                 int userId = (int) session.getAttribute("userid");
-                Order order = new Order(userId, "pickupTime", totalPrice);
+                Order order = new Order(userId, pickupTime, totalPrice);
                 userFacade.insertOrder(order, orderlines);
                 session.setAttribute("saldo", nySaldo);
                 userFacade.updateUser(nySaldo, userId);

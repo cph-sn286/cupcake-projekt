@@ -86,12 +86,13 @@
             </c:forEach>
 
         </table>
+
         <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
 
 
-                <%--        <div class="col-md-3">--%>
+
             <select name="pickuptime" id="pickuptime">
-                <option value="" selected disabled hidden>foreslå tidspunkt</option>
+                <option value="ASAP" selected disabled hidden>foreslå tidspunkt</option>
 
                 <option value="ASAP">ASAP</option>
                 <option value="11:00">11:00</option>
@@ -100,21 +101,13 @@
                 <option value="14:00">14:00</option>
             </select>
 
-<%--                    <select name="quantity" id="quantity">--%>
-<%--                        <option value="" selected disabled hidden>vælg antal</option>--%>
-<%--                        <option value="1">1</option>--%>
-<%--                        </div>--%>
-<%--                        <option value="2">2</option>--%>
-<%--                        <option value="3">3</option>--%>
-<%--                        <option value="4">4</option>--%>
-<%--                        <option value="5">5</option>--%>
-<%--                    </select>--%>
+
 
 
             <p>samlet pris: ${sessionScope.samletpris} kr</p>
 
             <input type="submit" value="Bestil ordre" class="btn btn-primary">
-                <%--        udskriv noget --%>
+
             <c:if test="${not empty sessionScope.errormessage}">
                 <p style="font-size: large">${sessionScope.errormessage}</p>
             </c:if>
