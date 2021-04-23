@@ -28,7 +28,9 @@ public class CupcakeMapper {
                     ps.setInt(1, order_id);
                     rowaAffected = ps.executeUpdate();
 
-                    if (rowaAffected==0){rowaAffected=1;}
+                    if (rowaAffected == 0) {
+                        rowaAffected = 1;
+                    }
                 } catch (SQLException ex) {
                     throw new UserException(ex.getMessage());
                 }

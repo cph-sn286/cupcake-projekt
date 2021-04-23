@@ -36,6 +36,7 @@ public abstract class Command
 
         commands.put("placeorder", new PlaceOrderCommand("showrecieptcostumer", "customer"));
         commands.put("placeorderline", new PlaceOrderlineCommand("customerpage", "customer"));
+        commands.put("editorderlines", new EditOrderlineCommand("customerpage", "customer"));
 
 
     }

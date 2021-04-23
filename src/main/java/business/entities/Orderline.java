@@ -7,6 +7,7 @@ public class Orderline {
     private int orderId;
     private int quantity;
     private double price;
+    private int id;
 
     public Orderline(IngridiensBottom ingridiensBottom, IngridiensTop ingridiensTop, int orderId, int quantity, double price) {
         this.ingridiensBottom = ingridiensBottom;
@@ -22,6 +23,15 @@ public class Orderline {
         this.ingridiensTop = ingridiensTop;
         this.quantity = quantity;
         setPrice(ingridiensBottom, ingridiensTop, quantity);
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public IngridiensBottom getIngridiensBottom() {

@@ -38,18 +38,14 @@ public class FrontController extends HttpServlet {
         }
 
         // Initialize whatever global datastructures needed here:
-
         CupcakeFacade cupcakeFacade = new CupcakeFacade(database);
         UserFacade userFacade = new UserFacade(database);
 
-
         try {
             getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
-
         } catch (UserException ex) {
             Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
         }
-
 
         try {
             getServletContext().setAttribute("IngridiensBottomList", userFacade.getIngridiensBottomsList());

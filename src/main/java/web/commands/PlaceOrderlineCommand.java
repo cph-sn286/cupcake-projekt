@@ -22,56 +22,92 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
         HttpSession session = request.getSession();
         UserFacade userFacade = new UserFacade(database);
 
-        int bottomId = Integer.parseInt(request.getParameter("bund"));
+        String bottomIdString = request.getParameter("bund");
         int topId = Integer.parseInt(request.getParameter("top"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        IngridiensBottom ingridiensBottom = userFacade.getIngridiensBottomsById(bottomId);
-        IngridiensTop ingridiensTop = userFacade.getIngridiensTopById(topId);
+        if (bottomIdString != null) {
+            int bottomId = Integer.parseInt(bottomIdString);
+            IngridiensBottom ingridiensBottom = userFacade.getIngridiensBottomsById(bottomId);
+            IngridiensTop ingridiensTop = userFacade.getIngridiensTopById(topId);
 
-        Cupcake newCupcake = new Cupcake(ingridiensBottom, ingridiensTop);
-        Orderline newOrderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
+            Cupcake newCupcake = new Cupcake(ingridiensBottom, ingridiensTop);
+            Orderline newOrderline = new Orderline(ingridiensBottom, ingridiensTop, quantity);
 
-        List<Orderline> orderlines;
+            List<Orderline> orderlines;
 
 //        hvis ordrelinjelisten er tom skal den oprettes
-        if (session.getAttribute("orderlineList") == null) {
-            orderlines = new ArrayList<>();
-            session.setAttribute("samletpris", newOrderline.getPrice());
+            if (session.getAttribute("orderlineList") == null) {
+                orderlines = new ArrayList<>();
+                session.setAttribute("samletpris", newOrderline.getPrice());
+
+//            ordrelinjen skal tildeles en id som kun bruges i den pågældende indkøbskurv-sessionscope
+                newOrderline.setId(1);
+                orderlines.add(newOrderline);
+                session.setAttribute("orderlineList", orderlines);
+                return pageToShow;
+            }
+
+//      hvis ordrelinjeListen har indhold:   (if (session.getAttribute("orderlineList") != null) )
+
+            orderlines = (List<Orderline>) session.getAttribute("orderlineList");
+
+//        undersøger om den nye cupcake allerede findes i listen
+            for (Orderline oldOrderline : orderlines) {
+                Cupcake oldCupcake = new Cupcake(oldOrderline.getIngridiensBottom(), oldOrderline.getIngridiensTop());
+                if (newCupcake.equals(oldCupcake)) {
+                    int newQuantity = newOrderline.getQuantity() + oldOrderline.getQuantity();
+                    oldOrderline.setQuantity(newQuantity);
+                    oldOrderline.setPrice(oldCupcake.getIngridiensBottom(), oldCupcake.getIngridiensTop(), newQuantity);
+                    session.setAttribute("orderlineList", orderlines);
+
+                    return pageToShow;
+                }
+            }
+//        hvis der allerede er noget i listen skal ny id være ën større end længden, da første element har id=1
+            int newOrderlineId = orderlines.size() + 1;
+            newOrderline.setId(newOrderlineId);
+
             orderlines.add(newOrderline);
+
+//        pris beregnes - så vi har den tilgængelig hver gang vi tilføjer til indkøbskurv
+            double totalPrice = 0;
+            for (Orderline orderline : orderlines) {
+                totalPrice = totalPrice + orderline.getPrice();
+            }
+
+//        hvis den nytilføjede cupcake ikke findes i listen, tilføjes den
+            session.setAttribute("samletpris", totalPrice);
             session.setAttribute("orderlineList", orderlines);
 
             return pageToShow;
         }
 
-//      hvis ordrelinjeListen har indhold:   (if (session.getAttribute("orderlineList") != null) )
 
-        orderlines = (List<Orderline>) session.getAttribute("orderlineList");
+        String deleteId = request.getParameter("delete");
+        String incId = request.getParameter("inc");
+        String decId = request.getParameter("dec");
 
-//        undersøger om den nye cupcake allerede findes i listen
-        for (Orderline oldOrderline : orderlines) {
-            Cupcake oldCupcake = new Cupcake(oldOrderline.getIngridiensBottom(), oldOrderline.getIngridiensTop());
-            if (newCupcake.equals(oldCupcake)) {
-                int newQuantity = newOrderline.getQuantity() + oldOrderline.getQuantity();
-                oldOrderline.setQuantity(newQuantity);
-                oldOrderline.setPrice(oldCupcake.getIngridiensBottom(), oldCupcake.getIngridiensTop(), newQuantity);
-                session.setAttribute("orderlineList", orderlines);
+        if (deleteId != null) {
+            List<Orderline> orderlines;
+            orderlines = (List<Orderline>) session.getAttribute("orderlineList");
 
-                return pageToShow;
+            System.out.println("vi nåede frem med et deleteID" + deleteId);
+            for (Orderline orderline : orderlines) {
+                if (orderline.getId() == Integer.parseInt(deleteId)) {
+                    System.out.println("vi fandt et element at slette");
+                    orderlines.remove(orderline);
+//                    så skal vi have navngivet orderlineId
+                    System.out.println("vi mangler kun at stemple");
+
+                    session.setAttribute("orderlineList", null);
+
+                }
             }
         }
-        orderlines.add(newOrderline);
-
-//        pris beregnes - så vi har den tilgængelig hver gang vi tilføjer til indkøbskurv
-        double totalPrice = 0;
-        for (Orderline orderline : orderlines) {
-            totalPrice = totalPrice + orderline.getPrice();
-        }
-
-//        hvis den nytilføjede cupcake ikke findes i listen, tilføjes den
-        session.setAttribute("samletpris", totalPrice);
-        session.setAttribute("orderlineList", orderlines);
 
         return pageToShow;
+
+
     }
 }
