@@ -32,4 +32,8 @@ public class CupcakeFacade
     public int updateOrder(String order_id, String pickuptime) throws UserException{
         return cupcakeMapper.updateOrder(pickuptime);
     }
+
+    public List<User> getAllCustomers() throws UserException {
+        return cupcakeMapper.getAllCustomers();
+    }
 }

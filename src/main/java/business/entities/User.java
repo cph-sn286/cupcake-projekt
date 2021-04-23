@@ -17,6 +17,13 @@ public class User
     private String role;
     private double saldo;
 
+    public User(int id, String email, String password, String role, double saldo) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.saldo = saldo;
+    }
 
     public double getSaldo() {
         return saldo;
