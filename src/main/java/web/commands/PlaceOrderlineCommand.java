@@ -105,8 +105,9 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
                     System.out.println("vi mangler kun at stemple");
 //if(orderlines==null)
 //                    session.setAttribute("orderlineList", orderlines);
-                    session.removeAttribute("orderlineList");
+                    session.setAttribute("orderlineList", orderlines);
                     System.out.println("vi nåede forbi");
+                    break;
 
                 }
             }

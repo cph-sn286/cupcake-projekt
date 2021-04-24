@@ -23,8 +23,6 @@ public class EditOrderlineCommand extends CommandProtectedPage {
         List<Orderline> orderlines;
 
         String deleteId = request.getParameter("delete");
-        String incId = request.getParameter("inc");
-        String decId = request.getParameter("dec");
 
         if (deleteId != null) {
 
@@ -35,10 +33,9 @@ public class EditOrderlineCommand extends CommandProtectedPage {
                 if (orderline.getId() == Integer.parseInt(deleteId)) {
                     System.out.println("vi fandt et element at slette");
                     orderlines.remove(orderline);
-//                    så skal vi have navngivet orderlineId
                     System.out.println("vi mangler kun at stemple");
 
-                    session.setAttribute("orderlineList", null);
+                    session.setAttribute("orderlineList", orderlines);
 
                 }
             }
