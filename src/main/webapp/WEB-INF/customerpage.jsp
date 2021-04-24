@@ -98,7 +98,7 @@
             <select name="pickuptime" id="pickuptime">
                 <option value="ASAP" selected disabled hidden>foreslå tidspunkt</option>
 
-                <option value="ASAP">ASAP</option>
+                <option value="ASAP" selected>ASAP</option>
                 <option value="11:00">11:00</option>
                 <option value="12:00">12:00</option>
                 <option value="13:00">13:00</option>
