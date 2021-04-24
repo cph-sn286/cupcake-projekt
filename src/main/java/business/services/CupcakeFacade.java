@@ -44,4 +44,7 @@ public class CupcakeFacade
     public User getCustomerById(int user_id) throws UserException {
         return cupcakeMapper.getCustomerById(user_id);
     }
+    public Orders getOrderByUserId(int userId) throws UserException{
+        return cupcakeMapper.getOrderByUserId(userId);
+    }
 }

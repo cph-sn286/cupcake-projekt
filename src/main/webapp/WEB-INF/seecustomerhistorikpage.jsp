@@ -26,19 +26,37 @@
                 <th>Saldo</th>
                 <th></th>
                 </thead>
-                    <tr>
-                        <td>${requestScope.valgtBruger.id}</td>
-                        <td>${requestScope.valgtBruger.email}</td>
-                        <td>${requestScope.valgtBruger.password}</td>
-                        <td>${requestScope.valgtBruger.role}</td>
-                        <td>${requestScope.valgtBruger.saldo}</td>
-                    </tr>
+                <tr>
+                    <td>${requestScope.valgtBruger.id}</td>
+                    <td>${requestScope.valgtBruger.email}</td>
+                    <td>${requestScope.valgtBruger.password}</td>
+                    <td>${requestScope.valgtBruger.role}</td>
+                    <td>${requestScope.valgtBruger.saldo}</td>
+                </tr>
             </table>
 
-                <c:if test="${not empty requestScope.error}">
-                    <br/>
-                    <p style="coler:red;font-size: large">${requestScope.error}</p>
-                </c:if>
+            <table class="table">
+                <thead>
+                <th>OrderId</th>
+                <th>PickupTime</th>
+                <th>Price</th>
+                <th>Dato</th>
+
+                </thead>
+                <c:forEach items="${applicationScope.orderList}">
+                    <tr>
+                        <td>${requestScope.brugerOrdre.order_id}</td>
+                        <td>${requestScope.brugerOrdre.pickuptime}</td>
+                        <td>${requestScope.brugerOrdre.totalprice}</td>
+                        <td>${requestScope.brugerOrdre.created}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+
+            <c:if test="${not empty requestScope.error}">
+                <br/>
+                <p style="coler:red;font-size: large">${requestScope.error}</p>
+            </c:if>
 
             </form>
         </div>

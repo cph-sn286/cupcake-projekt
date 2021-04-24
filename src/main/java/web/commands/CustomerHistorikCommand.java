@@ -15,6 +15,7 @@ public class CustomerHistorikCommand extends CommandProtectedPage {
     CupcakeFacade cupcakeFacade;
     UserFacade userFacade;
     User user;
+    Orders order;
 
     public CustomerHistorikCommand(String pageToShow, String role) {
         super(pageToShow, role);
@@ -31,6 +32,14 @@ public class CustomerHistorikCommand extends CommandProtectedPage {
         if (customerHistorik != null) {
             user = cupcakeFacade.getCustomerById(Integer.parseInt(customerHistorik));
             request.setAttribute("valgtBruger", user);
+
+            order = cupcakeFacade.getOrderByUserId(Integer.parseInt(customerHistorik));
+                request.setAttribute("brugerOrdre", order);
+                System.out.println(order.getOrder_id());
+
+
+//            for (int i = 0; i < order.getOrder_id(); i++) {
+//            }
 
 
         } else {

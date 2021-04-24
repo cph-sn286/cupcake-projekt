@@ -194,7 +194,32 @@ public class CupcakeMapper {
             throw new UserException(ex.getMessage());
         }
 
-
     }
 
+    public Orders getOrderByUserId(int userId) throws UserException {
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM orders WHERE user_id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, userId);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+
+                    int order_id = rs.getInt("order_id");
+                    int user_id = rs.getInt("user_id");
+                    String pickuptime = rs.getString("pickuptime");
+                    double totalprice = rs.getDouble("totalprice");
+                    Timestamp created = rs.getTimestamp("created");
+                    return new Orders(order_id, user_id, pickuptime, totalprice, created);
+                }
+                throw new UserException("der findes ingen ordre for user = " + userId);
+
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
 }
