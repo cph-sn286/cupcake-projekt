@@ -26,16 +26,17 @@ public class CustomerHistorikCommand extends CommandProtectedPage {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
 
-        String customerHistorik = request.getParameter("RedigerBruger");
+        String userIdString = request.getParameter("RedigerBruger");
+        List<Orders> orderListBruger = null;
 
-
-        if (customerHistorik != null) {
-            user = cupcakeFacade.getCustomerById(Integer.parseInt(customerHistorik));
+        if (userIdString != null) {
+            user = cupcakeFacade.getCustomerById(Integer.parseInt(userIdString));
+            System.out.println("vi trykkede på knap. og vi har userid " + Integer.parseInt(userIdString));
             request.setAttribute("valgtBruger", user);
 
-            order = cupcakeFacade.getOrderByUserId(Integer.parseInt(customerHistorik));
-                request.setAttribute("brugerOrdre", order);
-                System.out.println(order.getOrder_id());
+            orderListBruger = cupcakeFacade.getOrderlistByUserId(Integer.parseInt(userIdString));
+            System.out.println(orderListBruger.size());
+            request.setAttribute("brugerOrdreliste", orderListBruger);
 
 
 //            for (int i = 0; i < order.getOrder_id(); i++) {

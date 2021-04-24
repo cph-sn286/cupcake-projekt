@@ -18,19 +18,20 @@
             <h3>This is a list of all customers</h3>
 
 
-                <%--            <form action="${pageContext.request.contextPath}/fc/managecustomers" method="post">--%>
-            <table class="table">
-                <thead>
-                <th>UserId</th>
-                <th>Email</th>
-                <th>Passwd</th>
-                <th>role</th>
-                <th>Saldo</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                </thead>
-                <c:forEach var="userItem" items="${applicationScope.userList}">
+            <form action="${pageContext.request.contextPath}/fc/managecustomers" method="post">
+                <table class="table">
+                    <thead>
+                    <th>UserId</th>
+                    <th>Email</th>
+                    <th>Passwd</th>
+                    <th>role</th>
+                    <th>Saldo</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    </thead>
+
+                    <c:forEach var="userItem" items="${applicationScope.userList}">
                     <tr>
                         <td>${userItem.id}</td>
                         <td>${userItem.email}</td>
@@ -42,15 +43,17 @@
                                     value="${userItem.id}">slet kunde!
                             </button>
                         </td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/fc/seecustomerhistorik" method="post">
-                                <button class="btn btn-danger" type="submit" id="userId" value="${userItem.id}"
-                                        name="RedigerBruger">Rediger Bruger </button>
-                            </form>
-                        </td>
+            </form>
+            <td>
+                <form action="${pageContext.request.contextPath}/fc/seecustomerhistorik" method="post">
+                    <button class="btn btn-danger" type="submit" id="userId" value="${userItem.id}"
+                            name="RedigerBruger">Rediger Bruger
+                    </button>
+                </form>
+            </td>
 
-                    </tr>
-                </c:forEach>
+            </tr>
+            </c:forEach>
             </table>
 
             <c:if test="${not empty requestScope.error}">
@@ -58,7 +61,7 @@
                 <p style="coler:red;font-size: large">${requestScope.error}</p>
             </c:if>
 
-                <%--            </form>--%>
+
         </div>
         <div class="col-sm-2">
 

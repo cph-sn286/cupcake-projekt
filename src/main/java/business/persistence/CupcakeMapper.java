@@ -1,5 +1,6 @@
 package business.persistence;
 
+import business.entities.Order;
 import business.entities.Orders;
 import business.entities.User;
 import business.exceptions.UserException;
@@ -196,7 +197,8 @@ public class CupcakeMapper {
 
     }
 
-    public Orders getOrderByUserId(int userId) throws UserException {
+    public List<Orders> getOrderlistByUserId(int userId) throws UserException {
+        List<Orders> orderListUser = new ArrayList<>();
         try (Connection connection = database.connect()) {
             String sql = "SELECT * FROM orders WHERE user_id = ?";
 
@@ -204,19 +206,20 @@ public class CupcakeMapper {
 
                 ps.setInt(1, userId);
                 ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
+                while (rs.next()) {
 
                     int order_id = rs.getInt("order_id");
                     int user_id = rs.getInt("user_id");
                     String pickuptime = rs.getString("pickuptime");
                     double totalprice = rs.getDouble("totalprice");
                     Timestamp created = rs.getTimestamp("created");
-                    return new Orders(order_id, user_id, pickuptime, totalprice, created);
+                    orderListUser.add(new Orders(order_id, user_id, pickuptime, totalprice, created));
                 }
-                throw new UserException("der findes ingen ordre for user = " + userId);
+                    return orderListUser;
 
             } catch (SQLException ex) {
-                throw new UserException(ex.getMessage());
+                throw new UserException("der findes ingen ordre for user = " + userId);
+//                throw new UserException(ex.getMessage());
             }
         } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");

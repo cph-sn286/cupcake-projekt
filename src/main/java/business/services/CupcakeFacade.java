@@ -5,7 +5,6 @@ import business.entities.User;
 import business.exceptions.UserException;
 import business.persistence.CupcakeMapper;
 import business.persistence.Database;
-import business.persistence.UserMapper;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class CupcakeFacade
     public User getCustomerById(int user_id) throws UserException {
         return cupcakeMapper.getCustomerById(user_id);
     }
-    public Orders getOrderByUserId(int userId) throws UserException{
-        return cupcakeMapper.getOrderByUserId(userId);
+    public List<Orders> getOrderlistByUserId(int userId) throws UserException{
+        return cupcakeMapper.getOrderlistByUserId(userId);
     }
 }

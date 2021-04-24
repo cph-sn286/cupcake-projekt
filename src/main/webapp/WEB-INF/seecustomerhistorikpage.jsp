@@ -43,14 +43,18 @@
                 <th>Dato</th>
 
                 </thead>
-                <c:forEach items="${applicationScope.orderList}">
+
+                <c:forEach var="order" items="${requestScope.brugerOrdreliste}">
                     <tr>
-                        <td>${requestScope.brugerOrdre.order_id}</td>
-                        <td>${requestScope.brugerOrdre.pickuptime}</td>
-                        <td>${requestScope.brugerOrdre.totalprice}</td>
-                        <td>${requestScope.brugerOrdre.created}</td>
+                        <td>${order.order_id}</td>
+                        <td>${order.pickuptime}</td>
+                        <td>${order.totalprice}</td>
+                        <td>${order.created}</td>
+
                     </tr>
                 </c:forEach>
+
+
             </table>
 
             <c:if test="${not empty requestScope.error}">
