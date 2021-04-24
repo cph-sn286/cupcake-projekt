@@ -38,7 +38,6 @@ public class FrontController extends HttpServlet {
         }
 
         // Initialize whatever global datastructures needed here:
-
         CupcakeFacade cupcakeFacade = new CupcakeFacade(database);
         UserFacade userFacade = new UserFacade(database);
 

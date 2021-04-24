@@ -15,57 +15,56 @@
         Role: ${sessionScope.role}
 
         <form action="${pageContext.request.contextPath}/fc/placeorderline" method="post">
-                <%--            <div class="container">--%>
-            <div class="row">
-                <div class="col-md-12">
+        <%--            <div class="container">--%>
+        <div class="row">
+            <div class="col-md-12">
 
-                    <div class="col-md-3">
-                        <select name="bund" id="bund">
-                            <option value="" selected disabled hidden>vælg bund</option>
-                            <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
-                                <option value="${bund.bottomId}">${bund.flavor} ${bund.price} kr</option>
+                <div class="col-md-3">
+                    <select name="bund" id="bund">
+                        <option value="" selected disabled hidden>vælg bund</option>
+                        <c:forEach var="bund" items="${applicationScope.IngridiensBottomList}">
+                            <option value="${bund.bottomId}">${bund.flavor} ${bund.price} kr</option>
 
+                        </c:forEach>
+                    </select>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div style="margin-top: 3em;margin-bottom: 3em;">
+                        <select name="top" id="top">
+                            <option value="" selected disabled hidden>vælg top</option>
+                            <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
+                                <option value="${top.topId}"> ${top.flavor} ${top.price} kr</option>
                             </c:forEach>
                         </select>
                     </div>
 
 
                     <div class="col-md-3">
-                        <div style="margin-top: 3em;margin-bottom: 3em;">
-                            <select name="top" id="top">
-                                <option value="" selected disabled hidden>vælg top</option>
-                                <c:forEach var="top" items="${applicationScope.IngridiensTopList}">
-                                    <option value="${top.topId}"> ${top.flavor} ${top.price} kr</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <select name="quantity" id="quantity">
-                                <option value="" selected disabled hidden>vælg antal</option>
-                                <option value="1">1</option>
-                        </div>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                        <select name="quantity" id="quantity">
+                            <option value="" selected disabled hidden>vælg antal</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
-
                     </div>
 
-
                 </div>
 
-                <div class="col-md-3">
-                    <input type="submit" value="læg i kurv" class="btn btn-primary">
 
-                </div>
             </div>
-        </form>
+
+            <div class="col-md-3">
+                <input type="submit" value="læg i kurv" class="btn btn-primary">
+
+            </div>
+        </div>
         <%--            </div>--%>
 
-
+        <%--        <form action="${pageContext.request.contextPath}/fc/editorderlines" method="post">--%>
         <table class="table">
             <thead>
             <th>Top</th>
@@ -82,13 +81,18 @@
                     <td>${orderline.ingridiensTop.flavor}</td>
                     <td>${orderline.quantity}</td>
                     <td>${orderline.price}</td>
+                    <td>
+                        <button class="btn btn-danger " type="submit" name="delete"
+                                value="${orderline.id}">Slet
+                        </button>
+                    </td>
                 </tr>
             </c:forEach>
 
         </table>
+        </form>
 
         <form action="${pageContext.request.contextPath}/fc/placeorder" method="post">
-
 
 
             <select name="pickuptime" id="pickuptime">
@@ -100,8 +104,6 @@
                 <option value="13:00">13:00</option>
                 <option value="14:00">14:00</option>
             </select>
-
-
 
 
             <p>samlet pris: ${sessionScope.samletpris} kr</p>
