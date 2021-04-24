@@ -39,8 +39,11 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
 
             List<Orderline> orderlines;
 
+            orderlines= (List<Orderline>) session.getAttribute("orderlineList");
+
 //        hvis ordrelinjelisten er tom skal den oprettes
-            if (session.getAttribute("orderlineList") == null) {
+            if (orderlines == null || orderlines.size()==0) {
+                System.out.println("vi kom igennem if-tjek der ser at listen er null eller uden indhold");
                 orderlines = new ArrayList<>();
                 session.setAttribute("samletpris", newOrderline.getPrice());
 
@@ -48,6 +51,8 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
                 newOrderline.setId(1);
                 orderlines.add(newOrderline);
                 session.setAttribute("orderlineList", orderlines);
+                System.out.println("orderline "+newOrderline.getIngridiensBottom() +"blev oprettet med id "+ newOrderline.getId());
+                System.out.println("ordrelisten har nu en længde på "+ orderlines.size());
                 return pageToShow;
             }
 
@@ -86,9 +91,9 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
             return pageToShow;
         }
 
-        System.out.println("vi er lige før delete");
+
         String deleteId = request.getParameter("delete");
-        System.out.println("vi har hentet et delete -statement");
+
 //        String incId = request.getParameter("inc");
 //        String decId = request.getParameter("dec");
 
@@ -99,14 +104,11 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
             System.out.println("vi nåede frem med et deleteID" + deleteId);
             for (Orderline orderline : orderlines) {
                 if (orderline.getId() == Integer.parseInt(deleteId)) {
-                    System.out.println("vi fandt et element at slette");
+
                     orderlines.remove(orderline);
-//                    så skal vi have navngivet orderlineId
-                    System.out.println("vi mangler kun at stemple");
-//if(orderlines==null)
-//                    session.setAttribute("orderlineList", orderlines);
                     session.setAttribute("orderlineList", orderlines);
-                    System.out.println("vi nåede forbi");
+                    System.out.println("ordrelisten har nu en længde på "+ orderlines.size());
+
                     break;
 
                 }
