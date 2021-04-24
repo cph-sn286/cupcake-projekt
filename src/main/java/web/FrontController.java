@@ -43,12 +43,12 @@ public class FrontController extends HttpServlet {
         UserFacade userFacade = new UserFacade(database);
 
 
-        try {
-            getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
-
-        } catch (UserException ex) {
-            Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
-        }
+//        try {
+//            getServletContext().setAttribute("orderList", cupcakeFacade.getAllOrders());
+//
+//        } catch (UserException ex) {
+//            Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
+//        }
 
 
         try {

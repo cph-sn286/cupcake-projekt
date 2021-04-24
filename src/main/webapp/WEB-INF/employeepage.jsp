@@ -12,5 +12,7 @@
         <h1>Hello ${sessionScope.email} </h1>
         You are now logged in as a EMPLOYEE of our wonderful site.
         <p><a href="${pageContext.request.contextPath}/fc/manageorders">Gå til ordrer</a> </p>
+
+        <p><a href="${pageContext.request.contextPath}/fc/managecustomers">Gå til Customers</a> </p>
     </jsp:body>
 </t:genericpage>
