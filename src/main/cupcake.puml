@@ -1,0 +1,50 @@
+@startuml
+Title CUPCAKE
+
+State index.jsp
+State registerpage.jsp
+State loginpage.jsp
+
+note left of loginpage.jsp
+Username and role stored in session
+end note
+
+note right of LoggedOnAsCustomer
+inkøbskurv bliver i session til bestilt.
+end note
+
+[*] -> index.jsp
+index.jsp --> registerpage.jsp: ny bruger
+index.jsp --> loginpage.jsp: log på
+loginpage.jsp --> LoggedOnAsCustomer: log på [ok]
+loginpage.jsp --> loginpage.jsp: log på [fejl]
+registerpage.jsp --> LoggedOnAsCustomer: register [ok]
+
+State LoggedOnAsCustomer {
+    State customerpage.jsp
+    State customeraddcredit.jsp
+    State showrecieptcustomer.jsp
+    [*] -> customerpage.jsp
+customerpage.jsp --> customeraddcredit.jsp: insæt penge
+customerpage.jsp --> customerpage.jsp: bestilling [fejl]
+customeraddcredit.jsp --> customerpage.jsp: tank op [ok]
+customerpage.jsp --> showrecieptcustomer.jsp: bestilling [ok]
+showrecieptcustomer.jsp --> customerpage.jsp: ny bestilling
+}
+
+
+loginpage.jsp --> LoggedOnAsEmployee: login [ok]
+
+State LoggedOnAsEmployee {
+
+    State employeepage.jsp
+    State managecupcakepage.jsp
+    State managecustomerpage.jsp
+    State seecustomerhistorik.jsp
+employeepage.jsp --> managecupcakepage.jsp: se alle ordre
+employeepage.jsp --> managecustomerpage.jsp: se alle kunder
+managecustomerpage.jsp --> seecustomerhistorik.jsp: se enkelt kunde med alle odre
+[*] -> employeepage.jsp
+}
+
+@enduml
