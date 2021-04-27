@@ -26,7 +26,7 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
         String topIdString = request.getParameter("top");
         String quantityString = request.getParameter("quantity");
 
-        if (bottomIdString != null && topIdString !=null && quantityString !=null) {
+        if (bottomIdString != null && topIdString != null && quantityString != null) {
             int bottomId = Integer.parseInt(bottomIdString);
             int topId = Integer.parseInt(topIdString);
             int quantity = Integer.parseInt(quantityString);
@@ -39,10 +39,10 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
 
             List<Orderline> orderlines;
 
-            orderlines= (List<Orderline>) session.getAttribute("orderlineList");
+            orderlines = (List<Orderline>) session.getAttribute("orderlineList");
 
 //        hvis ordrelinjelisten er tom skal den oprettes
-            if (orderlines == null || orderlines.size()==0) {
+            if (orderlines == null || orderlines.size() == 0) {
                 System.out.println("vi kom igennem if-tjek der ser at listen er null eller uden indhold");
                 orderlines = new ArrayList<>();
                 session.setAttribute("samletpris", newOrderline.getPrice());
@@ -51,8 +51,8 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
                 newOrderline.setId(1);
                 orderlines.add(newOrderline);
                 session.setAttribute("orderlineList", orderlines);
-                System.out.println("orderline "+newOrderline.getIngridiensBottom() +"blev oprettet med id "+ newOrderline.getId());
-                System.out.println("ordrelisten har nu en længde på "+ orderlines.size());
+                System.out.println("orderline " + newOrderline.getIngridiensBottom() + "blev oprettet med id " + newOrderline.getId());
+                System.out.println("ordrelisten har nu en længde på " + orderlines.size());
                 return pageToShow;
             }
 
@@ -107,12 +107,20 @@ public class PlaceOrderlineCommand extends CommandProtectedPage {
 
                     orderlines.remove(orderline);
                     session.setAttribute("orderlineList", orderlines);
-                    System.out.println("ordrelisten har nu en længde på "+ orderlines.size());
+                    System.out.println("ordrelisten har nu en længde på " + orderlines.size());
 
                     break;
 
                 }
             }
+//            samlet pris beregnes på ny
+            double totalPrice = 0;
+            for (Orderline orderline : orderlines) {
+                totalPrice = totalPrice + orderline.getPrice();
+            }
+
+//        hvis den nytilføjede cupcake ikke findes i listen, tilføjes den
+            session.setAttribute("samletpris", totalPrice);
         }
 
         return pageToShow;

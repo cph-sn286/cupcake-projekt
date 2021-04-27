@@ -28,6 +28,7 @@ public class PlaceOrderCommand extends CommandProtectedPage {
 
 //        int pickupTime= (String)request.getAttribute("pickuptime");
         String pickupTime = request.getParameter("pickuptime");
+
         System.out.println(pickupTime);
 
 //        skal være via facade
